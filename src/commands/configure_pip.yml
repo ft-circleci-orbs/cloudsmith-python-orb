@@ -17,4 +17,4 @@ steps:
         REPOSITORY: <<parameters.repository>>
         SERVICE_SLUG: <<parameters.service_slug>>
       name: Configure pip
-      command: <<include(scripts/configure-pip.sh)>>
+      command: <<include(scripts/configure_pip.sh)>>
