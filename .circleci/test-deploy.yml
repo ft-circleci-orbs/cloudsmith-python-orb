@@ -47,5 +47,6 @@ workflows:
           requires:
             - orb-tools/pack
             - command-test
-          context: <publishing-context>
+          # Use a context to hold your publishing token.
+          context: circleci-orb-publishing
           filters: *release-filters
