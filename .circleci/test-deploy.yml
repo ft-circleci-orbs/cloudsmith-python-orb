@@ -24,7 +24,7 @@ jobs:
   # You may want to add additional validation steps to ensure the commands are working as expected.
   test-configure-pip:
     docker:
-      - image: cimg/python:latest
+      - image: cimg/python:3.8
     steps:
       - checkout
       - cloudsmith-circleci-orb/configure-pip
