@@ -21,7 +21,7 @@ fi
 configurePip() {
     # Check if pip is installed and pip config
     if command -v pip &> /dev/null; then
-    pip config --user set global.index-url https://\"$SERVICE_SLUG:$API_KEY\"@packages.ft.com/basic/\"$REPOSITORY\"/python/simple/
+    pip config --user set global.index-url https://"{$SERVICE_SLUG:$API_KEY}"@packages.ft.com/basic/"{$REPOSITORY}"/python/simple/
 else
     echo "Error, pip is not installed. Exiting..."
 fi
