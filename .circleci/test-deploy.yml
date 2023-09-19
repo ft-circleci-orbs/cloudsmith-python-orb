@@ -22,18 +22,19 @@ release-filters: &release-filters
 jobs:
   # Create jobs to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-test:
+  test-configure-pip:
     docker:
-      - image: cimg/base:current
+      - image: cimg/python:3.8
     steps:
       - checkout
-      # Run your orb's commands to validate them.
+      - cloudsmith-circleci-orb/configure-pip
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       # Test your orb's commands in a custom job and test your orb's jobs directly as a part of this workflow.
-      - command-test:
+      - test-configure-pip:
+          context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
       - orb-tools/pack:
@@ -45,7 +46,7 @@ workflows:
           # Ensure this job requires all test jobs and the pack job.
           requires:
             - orb-tools/pack
-            - command-test
+            - test-configure-pip
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
