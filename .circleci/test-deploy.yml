@@ -27,7 +27,7 @@ jobs:
       - image: cimg/python:3.8
     steps:
       - checkout
-      - cloudsmith-circleci-orb/configure_pip
+      - cloudsmith-circleci/configure_pip
 workflows:
   test-deploy:
     jobs:
