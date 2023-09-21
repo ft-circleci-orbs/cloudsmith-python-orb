@@ -20,10 +20,21 @@ workflows:
           exclude: "RC006, RC007"
       - shellcheck/check:
           filters: *filters
+      - orb-tools/publish:
+          orb_name: ft-circleci-orbs/cloudsmith-circleci
+          vcs_type: << pipeline.project.type >>
+          requires:
+            - orb-tools/lint
+            - orb-tools/review
+            - orb-tools/pack
+            - shellcheck/check
+          # Use a context to hold your publishing token.
+          context: circleci-orb-publishing
+          filters: *filters
       # Triggers the next workflow in the Orb Development Kit.
       - orb-tools/continue:
           pipeline_number: << pipeline.number >>
           vcs_type: << pipeline.project.type >>
-          orb_name: doppler-circleci-orb
-          requires: [orb-tools/lint, orb-tools/pack, orb-tools/review, shellcheck/check]
+          orb_name: cloudsmith-circleci
+          requires: [orb-tools/publish]
           filters: *filters

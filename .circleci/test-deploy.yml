@@ -4,7 +4,7 @@ orbs:
   # Reference your orb's jobs and commands below as they will exist when built.
   orb-tools: circleci/orb-tools@12.0
   # The orb definition is intentionally not included here. It will be injected into the pipeline.
-  cloudsmith-circleci-orb: {}
+  cloudsmith-circleci: {}
 
 # Use this tag to ensure test jobs always run,
 # even though the downstream publish job will only run on release tags.
@@ -27,7 +27,7 @@ jobs:
       - image: cimg/python:3.8
     steps:
       - checkout
-      - cloudsmith-circleci-orb/configure_pip
+      - cloudsmith-circleci/configure_pip
 workflows:
   test-deploy:
     jobs:
@@ -40,7 +40,7 @@ workflows:
       - orb-tools/pack:
           filters: *release-filters
       - orb-tools/publish:
-          orb_name: financial-times/cloudsmith-circleci-orb
+          orb_name: financial-times/cloudsmith-circleci
           vcs_type: << pipeline.project.type >>
           pub_type: production
           # Ensure this job requires all test jobs and the pack job.
