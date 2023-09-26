@@ -31,13 +31,33 @@ jobs:
           repository: "financial-times-internal-releases"
           service: "code-management"
       - run:
+          name: Assert CLOUDSMITH environment variables have been set
           command: | 
-            echo $CLOUDSMITH_SERVICE
-            echo $CLOUDSMITH_OIDC_TOKEN
-            echo $CLOUDSMITH_REPOSITORY
-            echo $CLOUDSMITH_PYTHON_REPOSITORY_URL
-            echo $CLOUDSMITH_PIP_INDEX_URL
-
+            if [ $CLOUDSMITH_SERVICE -ne "code-management" ]
+            then
+              echo "CLOUDSMITH_SERVICE has not been set."
+              exit 1
+            fi
+            if [ $CLOUDSMITH_REPOSITORY -ne "financial-times-internal-releases" ]
+            then
+              echo "CLOUDSMITH_REPOSITORY has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_OIDC_TOKEN ]
+            then
+              echo "CLOUDSMITH_OIDC_TOKEN has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_PYTHON_REPOSITORY_URL ]
+            then
+              echo "CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
+            then
+              echo "CLOUDSMITH_PIP_INDEX_URL has not been set."
+              exit 1
+            fi
 
 workflows:
   test-deploy:
