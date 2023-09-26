@@ -21,9 +21,9 @@ fi
 }
 
 
-configureEnvironment() {
-  # 
-}
+# configureEnvironment() {
+#   # 
+# }
 
 # Retrieve Cloudsmith API key via OIDC
 getOidcToken
