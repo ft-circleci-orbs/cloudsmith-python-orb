@@ -31,7 +31,12 @@ jobs:
           repository: "financial-times-internal-releases"
           service: "code-management"
       - run:
-          command: echo $BASH_ENV 
+          command: | 
+            echo $CLOUDSMITH_SERVICE
+            echo $CLOUDSMITH_OIDC_TOKEN
+            echo $CLOUDSMITH_REPOSITORY
+            echo $CLOUDSMITH_PYTHON_REPOSITORY_URL
+            echo $CLOUDSMITH_PIP_INDEX_URL
 
 
 workflows:
