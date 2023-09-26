@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# shellcheck disable=SC2016
+# shellcheck disable=SC2129
+
 echo "Getting Cloudsmith OIDC token..."
 
 RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "{\"oidc_token\":\"$CIRCLE_OIDC_TOKEN_V2\", \"service_slug\":\"$CLOUDSMITH_SERVICE\"}" "https://api.cloudsmith.io/openid/financial-times/")
