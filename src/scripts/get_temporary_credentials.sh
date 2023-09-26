@@ -36,8 +36,9 @@ else
   CLOUDSMITH_PYTHON_REPOSITORY_URL="https://packages.ft.com/basic/$CLOUDSMITH_REPOSITORY/python/simple/"
   CLOUDSMITH_PIP_INDEX_URL="https://$CLOUDSMITH_SERVICE:$CLOUDSMITH_OIDC_TOKEN@packages.ft.com/basic/$CLOUDSMITH_REPOSITORY/python/simple/"
 
+  echo "export CLOUDSMITH_OIDC_TOKEN=\"$CLOUDSMITH_OIDC_TOKEN\"" >> "$BASH_ENV"
   echo "export CLOUDSMITH_PYTHON_REPOSITORY_URL=\"$CLOUDSMITH_PYTHON_REPOSITORY_URL\"" >> "$BASH_ENV"
   echo "export CLOUDSMITH_PIP_INDEX_URL=\"$CLOUDSMITH_PIP_INDEX_URL\"" >> "$BASH_ENV"
-  echo "export CLOUDSMITH_OIDC_TOKEN=\"$CLOUDSMITH_OIDC_TOKEN\"" >> "$BASH_ENV"
-  echo "export CLOUDSMITH_SERVICE=\"$CLOUDSMITH_SERVICE\"" >> "$BASH_ENV"
+
+  echo "Cloudsmith environment variables exported successfully."
 fi
