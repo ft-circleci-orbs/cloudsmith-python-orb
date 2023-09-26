@@ -27,7 +27,13 @@ jobs:
       - image: cimg/python:3.8
     steps:
       - checkout
-      - cloudsmith-circleci/get_temporary_credentials
+      - cloudsmith-circleci/get_temporary_credentials:
+          repository: "financial-times-internal-releases"
+          service: "code-management"
+      - run:
+          command: echo $BASH_ENV 
+
+
 workflows:
   test-deploy:
     jobs:
