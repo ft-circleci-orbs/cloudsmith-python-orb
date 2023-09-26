@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SERVICE_SLUG="code-management"
+
 # Function to get a Cloudsmith API Key via OIDC
 getOidcToken() {
   echo "Getting Cloudsmith API Key via OIDC..."
@@ -9,6 +11,7 @@ if [[ $RESPONSE == *'"token"'* ]]; then
   # If the "token" key is present, it's considered a success
   API_KEY=$(echo "$RESPONSE" | grep -o '"token": *"[^"]*"' | cut -d":" -f2 | tr -d '" ')
   echo "API key retrieved successfully"
+  echo $API_KEY
 else
   # If the "token" key is not present, it's considered an error`    `
   # Parse through response to get error
@@ -17,18 +20,13 @@ else
 fi
 }
 
-# Function to configure pip for Cloudsmith
-configurePip() {
-    # Check if pip is installed and pip config
-    if command -v pip &> /dev/null; then
-    pip config --user set global.index-url https://"{$SERVICE_SLUG:$API_KEY}"@packages.ft.com/basic/"{$REPOSITORY}"/python/simple/
-else
-    echo "Error, pip is not installed. Exiting..."
-fi
+
+configureEnvironment() {
+  # 
 }
 
 # Retrieve Cloudsmith API key via OIDC
 getOidcToken
 
-# Configure Pip
-configurePip
+
+# configureEnvironment()
