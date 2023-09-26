@@ -11,7 +11,7 @@ if [[ $RESPONSE == *'"token"'* ]]; then
   # If the "token" key is present, it's considered a success
   API_KEY=$(echo "$RESPONSE" | grep -o '"token": *"[^"]*"' | cut -d":" -f2 | tr -d '" ')
   echo "API key retrieved successfully"
-  echo $API_KEY
+  echo "$API_KEY"
 else
   # If the "token" key is not present, it's considered an error`    `
   # Parse through response to get error
