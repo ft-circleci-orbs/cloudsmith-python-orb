@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Assert CLOUDSMITH environment variables have been set
           command: | 
-            if [ $CLOUDSMITH_SERVICE != "code-management" ]
+            if [ $CLOUDSMITH_SERVICE != "code-management-testing" ]
             then
               echo "CLOUDSMITH_SERVICE has not been set."
               exit 1
