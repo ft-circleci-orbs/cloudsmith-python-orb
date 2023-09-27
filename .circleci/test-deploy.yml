@@ -24,12 +24,12 @@ jobs:
   # You may want to add additional validation steps to ensure the commands are working as expected.
   test-get_temporary_credentials:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/base:current
     steps:
       - checkout
       - cloudsmith-circleci/get_temporary_credentials:
           repository: "financial-times-internal-releases"
-          service: "code-management"
+          service: "code-management-testing"
       - run:
           name: Assert CLOUDSMITH environment variables have been set
           command: | 
