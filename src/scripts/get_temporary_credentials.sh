@@ -1,4 +1,5 @@
 #!/bin/bash
+set +e
 
 # shellcheck disable=SC2016
 # shellcheck disable=SC2129
@@ -20,7 +21,7 @@ echo "CLOUDSMITH_SERVICE:     $CLOUDSMITH_SERVICE"
 echo "CLOUDSMITH_REPOSITORY:  $CLOUDSMITH_REPOSITORY"
 echo "..."
 
-RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "{\"oidc_token\":\"$CIRCLE_OIDC_TOKEN_V2\", \"service_slug\":\"$CLOUDSMITH_SERVICE\"}" "https://api.cloudsmith.io/openid/financial-times/")
+RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "{\"oidc_token\":\"$CIRCLE_OIDC_TOKEN_V2\", \"service_slug\":\"$CLOUDSMITH_SERVICE\"}" --silent --show-error "https://api.cloudsmith.io/openid/financial-times/")
 
 CLOUDSMITH_OIDC_TOKEN=$(echo "$RESPONSE" | grep -o '"token": "[^"]*' | grep -o '[^"]*$')
 
