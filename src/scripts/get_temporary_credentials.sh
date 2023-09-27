@@ -42,5 +42,10 @@ else
   echo "export CLOUDSMITH_PYTHON_REPOSITORY_URL=\"$CLOUDSMITH_PYTHON_REPOSITORY_URL\"" >> "$BASH_ENV"
   echo "export CLOUDSMITH_PIP_INDEX_URL=\"$CLOUDSMITH_PIP_INDEX_URL\"" >> "$BASH_ENV"
 
-  echo "Cloudsmith environment variables exported successfully."
+  echo "The following Cloudsmith environment variables have been exported successfully."
+  echo "CLOUDSMITH_PIP_INDEX_URL"
+  echo "CLOUDSMITH_PYTHON_REPOSITORY_URL"
+  echo "CLOUDSMITH_OIDC_TOKEN"
+  echo "CLOUDSMITH_REPOSITORY"
+  echo "CLOUDSMITH_SERVICE"
 fi
