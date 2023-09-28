@@ -10,7 +10,7 @@ usage:
         - image: cimg/python:current
       steps:
         - checkout
-        - cloudsmith-circleci/get_temporary_credentials:
+        - cloudsmith-circleci/setup_env_vars:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
         - run:

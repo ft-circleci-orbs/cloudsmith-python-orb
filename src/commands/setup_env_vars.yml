@@ -18,4 +18,4 @@ steps:
         echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> $BASH_ENV
   - run:
       name: Get Temporary Credentials
-      command: <<include(scripts/get_temporary_credentials.sh)>>
+      command: <<include(scripts/setup_env_vars.sh)>>
