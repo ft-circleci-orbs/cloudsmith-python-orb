@@ -35,29 +35,31 @@ jobs:
           command: | 
             if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "code-management-testing" ]
             then
-              echo "CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
+              echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
               exit 1
             fi
             if [ $CLOUDSMITH_REPOSITORY_IDENTIFIER != "financial-times-internal-releases" ]
             then
-              echo "CLOUDSMITH_REPOSITORY_IDENTIFIER has not been set."
+              echo "Test failed: CLOUDSMITH_REPOSITORY_IDENTIFIER has not been set."
               exit 1
             fi
             if [ -z $CLOUDSMITH_OIDC_TOKEN ]
             then
-              echo "CLOUDSMITH_OIDC_TOKEN has not been set."
+              echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
               exit 1
             fi
             if [ -z $CLOUDSMITH_PYTHON_REPOSITORY_URL ]
             then
-              echo "CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
+              echo "Test failed: CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
               exit 1
             fi
             if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
             then
-              echo "CLOUDSMITH_PIP_INDEX_URL has not been set."
+              echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
               exit 1
             fi
+            echo "All tests passed."
+
 
 workflows:
   test-deploy:
