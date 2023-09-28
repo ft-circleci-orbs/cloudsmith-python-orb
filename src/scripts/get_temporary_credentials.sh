@@ -20,7 +20,6 @@ fi
 echo "Getting Cloudsmith OIDC token for: "
 echo "CLOUDSMITH_SERVICE_IDENTIFIER:     $CLOUDSMITH_SERVICE_IDENTIFIER"
 echo "CLOUDSMITH_REPOSITORY_IDENTIFIER:  $CLOUDSMITH_REPOSITORY_IDENTIFIER"
-echo "..."
 
 RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "{\"oidc_token\":\"$CIRCLE_OIDC_TOKEN_V2\", \"service_slug\":\"$CLOUDSMITH_SERVICE_IDENTIFIER\"}" --silent --show-error "https://api.cloudsmith.io/openid/financial-times/")
 
@@ -34,6 +33,7 @@ then
   exit 1
 else
   echo "Successfully generated OIDC token."
+  echo ""
 
   CLOUDSMITH_PYTHON_REPOSITORY_URL="https://packages.ft.com/basic/$CLOUDSMITH_REPOSITORY_IDENTIFIER/python/simple/"
   CLOUDSMITH_PIP_INDEX_URL="https://$CLOUDSMITH_SERVICE_IDENTIFIER:$CLOUDSMITH_OIDC_TOKEN@packages.ft.com/basic/$CLOUDSMITH_REPOSITORY_IDENTIFIER/python/simple/"
@@ -42,7 +42,8 @@ else
   echo "export CLOUDSMITH_PYTHON_REPOSITORY_URL=\"$CLOUDSMITH_PYTHON_REPOSITORY_URL\"" >> "$BASH_ENV"
   echo "export CLOUDSMITH_PIP_INDEX_URL=\"$CLOUDSMITH_PIP_INDEX_URL\"" >> "$BASH_ENV"
 
-  echo "The following Cloudsmith environment variables have been exported successfully."
+  echo "The following Cloudsmith environment variables have been exported. The OIDC token has been masked."
+  echo ""
   echo "CLOUDSMITH_OIDC_TOKEN=********"
   echo "CLOUDSMITH_PIP_INDEX_URL=https://$CLOUDSMITH_SERVICE_IDENTIFIER:********@packages.ft.com/basic/$CLOUDSMITH_REPOSITORY_IDENTIFIER/python/simple/"
   echo "CLOUDSMITH_PYTHON_REPOSITORY_URL=$CLOUDSMITH_PYTHON_REPOSITORY_URL"
