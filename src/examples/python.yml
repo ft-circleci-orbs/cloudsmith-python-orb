@@ -1,0 +1,20 @@
+description: >
+  Python usage examples.
+usage:
+  version: 2.1
+  orbs:
+    cloudsmith-circleci: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+  workflows:
+    use-my-orb:
+      jobs:
+        install_python_dependencies_from_cloudsmith:
+          docker:
+            - image: cimg/python:current
+          steps:
+            - checkout
+            - cloudsmith-circleci/get_temporary_credentials:
+                repository_identifier: "your-repository-identifier"
+                service_identifier: "your-service-identifier"
+            - run:
+                name: Install Python dependencies
+                command: pip install -r requirements.txt --index-url=$CLOUDSMITH_PYTHON_REPOSITORY_URL
