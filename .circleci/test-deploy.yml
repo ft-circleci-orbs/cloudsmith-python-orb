@@ -29,11 +29,11 @@ jobs:
       - checkout
       - cloudsmith-circleci/setup_env_vars:
           repository_identifier: "financial-times-internal-releases"
-          service_identifier: "code-management-testing"
+          service_identifier: "circleci-orb-testing"
       - run:
           name: Assert CLOUDSMITH environment variables have been set
           command: | 
-            if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "code-management-testing" ]
+            if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "circleci-orb-testing" ]
             then
               echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
               exit 1
