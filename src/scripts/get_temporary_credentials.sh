@@ -5,7 +5,7 @@
 
 set +e
 
-if [ -z "$CLOUDSMITH_SERVICE_ID" ]
+if [ -z "$CLOUDSMITH_SERVICE_IDENTIFIER" ]
 then
   echo "Unable to generate OIDC token. Environment variable CLOUDSMITH_SERVICE_IDENTIFIER is not set."
   exit 1
