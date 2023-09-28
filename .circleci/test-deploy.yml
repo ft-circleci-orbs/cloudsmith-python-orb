@@ -22,18 +22,51 @@ release-filters: &release-filters
 jobs:
   # Create jobs to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
-  test-configure-pip:
+  test-setup_env_vars:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/base:current
     steps:
       - checkout
-      - cloudsmith-circleci/configure_pip
+      - cloudsmith-circleci/setup_env_vars:
+          repository_identifier: "financial-times-internal-releases"
+          service_identifier: "circleci-orb-testing"
+      - run:
+          name: Assert CLOUDSMITH environment variables have been set
+          command: | 
+            if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
+              exit 1
+            fi
+            if [ $CLOUDSMITH_REPOSITORY_IDENTIFIER != "financial-times-internal-releases" ]
+            then
+              echo "Test failed: CLOUDSMITH_REPOSITORY_IDENTIFIER has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_OIDC_TOKEN ]
+            then
+              echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_PYTHON_REPOSITORY_URL ]
+            then
+              echo "Test failed: CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
+            then
+              echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
+
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       # Test your orb's commands in a custom job and test your orb's jobs directly as a part of this workflow.
-      - test-configure-pip:
+      - test-setup_env_vars:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
@@ -46,7 +79,7 @@ workflows:
           # Ensure this job requires all test jobs and the pack job.
           requires:
             - orb-tools/pack
-            - test-configure-pip
+            - test-setup_env_vars
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters

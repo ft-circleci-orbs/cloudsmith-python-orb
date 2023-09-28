@@ -1,0 +1,20 @@
+description: >
+  Connects to Cloudsmith via OIDC
+parameters:
+  repository_identifier:
+    description: >
+      ID of the cloudsmith repository
+    type: string
+  service_identifier:
+    description: >
+      ID of the Cloudsmith Service account that will be used to access the repository
+    type: string
+steps:
+  - run:
+      name: Export parameters for script
+      command: |
+        echo "export CLOUDSMITH_REPOSITORY_IDENTIFIER=\"<<parameters.repository_identifier>>\"" >> $BASH_ENV
+        echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> $BASH_ENV
+  - run:
+      name: Get Temporary Credentials
+      command: <<include(scripts/setup_env_vars.sh)>>
