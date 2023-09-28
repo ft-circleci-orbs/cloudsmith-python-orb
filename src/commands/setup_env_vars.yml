@@ -5,7 +5,6 @@ parameters:
     description: >
       ID of the cloudsmith repository
     type: string
-    default: "financial-times-internal-releases"
   service_identifier:
     description: >
       ID of the Cloudsmith Service account that will be used to access the repository
