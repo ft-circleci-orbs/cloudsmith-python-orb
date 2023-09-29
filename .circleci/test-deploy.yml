@@ -23,9 +23,10 @@ jobs:
   # Create jobs to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
 
-  test_authenticate_with_oidc:
+  test-authenticate_with_oidc:
     docker:
       - image: cimg/base:current
+    steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
           service_identifier: "circleci-orb-testing"
@@ -44,9 +45,10 @@ jobs:
             fi
             echo "All tests passed."
 
-  test_set_env_vars_for_pip:
+  test-set_env_vars_for_pip:
     docker:
       - image: cimg/base:current
+    steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
           service_identifier: "circleci-orb-testing"
@@ -62,9 +64,10 @@ jobs:
             fi
             echo "All tests passed."
 
-  test_configure_pip:
+  test-configure_pip:
     docker:
       - image: cimg/base:current
+    steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
           service_identifier: "circleci-orb-testing"
@@ -87,10 +90,13 @@ workflows:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       # Test your orb's commands in a custom job and test your orb's jobs directly as a part of this workflow.
-      - test_authenticate_with_oidc:
+      - test-authenticate_with_oidc:
           context: circleci-orb-publishing
           filters: *filters
-      - test_set_env_vars_for_pip:
+      - test-set_env_vars_for_pip:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-configure_pip:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
