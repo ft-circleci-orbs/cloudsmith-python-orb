@@ -67,7 +67,7 @@ Example of installing Python dependencies:
             command: pip install -r requirements.txt --index-url=$CLOUDSMITH_PYTHON_DOWNLOAD_REPOSITORY_URL
 ```
 
-More example of how to use the environment variable can be found in the [cloudsmith-circleci-orb examples](https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb/tree/main/src/examples).
+More examples of how to use the environment variables can be found in the [cloudsmith-circleci-orb examples](https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb/tree/main/src/examples).
 
 ---
 
