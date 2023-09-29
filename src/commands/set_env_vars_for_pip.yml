@@ -1,6 +1,6 @@
 description:
   Generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
-  
+
   Depends on authenticate-with-oidc.
 parameters:
   repository_identifier:
