@@ -48,9 +48,9 @@ jobs:
               echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
               exit 1
             fi
-            if [ -z $CLOUDSMITH_PYTHON_REPOSITORY_URL ]
+            if [ -z $CLOUDSMITH_PYTHON_DOWNLOAD_REPOSITORY_URL ]
             then
-              echo "Test failed: CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
+              echo "Test failed: CLOUDSMITH_PYTHON_DOWNLOAD_REPOSITORY_URL has not been set."
               exit 1
             fi
             if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
