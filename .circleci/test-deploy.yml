@@ -22,6 +22,46 @@ release-filters: &release-filters
 jobs:
   # Create jobs to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
+
+  test_authenticate_with_oidc:
+    docker:
+      - image: cimg/base:current
+      - checkout
+      - cloudsmith-circleci/authenticate_with_oidc:
+          service_identifier: "circleci-orb-testing"
+      - run:
+          name: Assert environment variables have been set
+          command: | 
+            if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_OIDC_TOKEN ]
+            then
+              echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
+  test_set_env_vars_for_pip:
+    docker:
+      - image: cimg/base:current
+      - checkout
+      - cloudsmith-circleci/authenticate_with_oidc:
+          service_identifier: "circleci-orb-testing"
+      - cloudsmith-circleci/set_env_vars_for_pip:
+          repository_identifier: "financial-times-internal-releases"
+      - run:
+          name: Assert environment variables have been set
+          command: | 
+            if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
+            then
+              echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
   test-setup_env_vars:
     docker:
       - image: cimg/base:current
@@ -66,6 +106,12 @@ workflows:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       # Test your orb's commands in a custom job and test your orb's jobs directly as a part of this workflow.
+      - test_authenticate_with_oidc:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test_set_env_vars_for_pip:
+          context: circleci-orb-publishing
+          filters: *filters
       - test-setup_env_vars:
           context: circleci-orb-publishing
           filters: *filters
