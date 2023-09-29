@@ -1,11 +1,11 @@
-description:
+description: |
   Authenticate with Cloudsmith using OpenID Connect (OIDC) and if successful generate a short-lived OIDC token 
   for use in subsequent requests to cloudsmith. The token is valid for up to 2 hours. The environment variables 
   CLOUDSMITH_SERVICE_IDENTIFIER and CLOUDSMITH_OIDC_TOKEN are both setand can be used to configure package 
   management tools (e.g. npm, pip, maven) to download and upload package to cloudsmith repositories.
 parameters:
   service_identifier:
-    description:
+    description: |
       The identity/slug of the Cloudsmith service account to use when authenticating
     type: string
 steps:
