@@ -11,6 +11,6 @@ then
   exit 1
 fi
 
-python -m pip config set global.index-url $CLOUDSMITH_PIP_INDEX_URL
+python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
 
 echo "Pip index-url configured successfully for Cloudsmith repository: $CLOUDSMITH_REPOSITORY_IDENTIFIER"
