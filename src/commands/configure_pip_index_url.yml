@@ -1,0 +1,14 @@
+description:
+  Configures pip setting the index-url property.
+
+  Depends on authenticate-with-oidc.
+parameters:
+  repository_identifier:
+    description: The identity/slug of the Cloudsmith repository
+    type: string
+steps:
+  - set_env_vars_for_pip:
+      repository_identifier: <<parameters.repository_identifier>>
+  - run:
+      name: Configure pip global.index-url with Cloudsmith repository
+      command: <<include(scripts/configure_pip_index_url.sh)>>

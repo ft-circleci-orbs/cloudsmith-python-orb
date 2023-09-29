@@ -62,6 +62,26 @@ jobs:
             fi
             echo "All tests passed."
 
+  test_configure_pip:
+    docker:
+      - image: cimg/base:current
+      - checkout
+      - cloudsmith-circleci/authenticate_with_oidc:
+          service_identifier: "circleci-orb-testing"
+      - cloudsmith-circleci/configure_pip:
+          repository_identifier: "financial-times-internal-releases"
+      - run:
+          name: Assert environment variables have been set
+          command: | 
+            CONFIGURED_PIP_INDEX_URL=$(python -m pip config get global.index-url)
+            if [ $CONFIGURED_PIP_INDEX_URL != $CLOUDSMITH_PIP_INDEX_URL ]
+            then
+              echo "Test failed: Pip index-url is not configured"
+              exit 1
+            fi
+            echo "All tests passed."
+
+
 workflows:
   test-deploy:
     jobs:
