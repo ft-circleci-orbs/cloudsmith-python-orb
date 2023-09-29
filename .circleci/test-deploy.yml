@@ -64,7 +64,7 @@ jobs:
             fi
             echo "All tests passed."
 
-  test-configure_pip:
+  test-configure_pip_index_url:
     docker:
       - image: cimg/base:current
     steps:
@@ -109,7 +109,9 @@ workflows:
           # Ensure this job requires all test jobs and the pack job.
           requires:
             - orb-tools/pack
-            - test-setup_env_vars
+            - test-authenticate_with_oidc
+            - test-set_env_vars_for_pip
+            - test-configure_pip_index_url
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
