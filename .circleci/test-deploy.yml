@@ -62,45 +62,6 @@ jobs:
             fi
             echo "All tests passed."
 
-  test-setup_env_vars:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - checkout
-      - cloudsmith-circleci/setup_env_vars:
-          repository_identifier: "financial-times-internal-releases"
-          service_identifier: "circleci-orb-testing"
-      - run:
-          name: Assert CLOUDSMITH environment variables have been set
-          command: | 
-            if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "circleci-orb-testing" ]
-            then
-              echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
-              exit 1
-            fi
-            if [ $CLOUDSMITH_REPOSITORY_IDENTIFIER != "financial-times-internal-releases" ]
-            then
-              echo "Test failed: CLOUDSMITH_REPOSITORY_IDENTIFIER has not been set."
-              exit 1
-            fi
-            if [ -z $CLOUDSMITH_OIDC_TOKEN ]
-            then
-              echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
-              exit 1
-            fi
-            if [ -z $CLOUDSMITH_PYTHON_REPOSITORY_URL ]
-            then
-              echo "Test failed: CLOUDSMITH_PYTHON_REPOSITORY_URL has not been set."
-              exit 1
-            fi
-            if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
-            then
-              echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
-              exit 1
-            fi
-            echo "All tests passed."
-
-
 workflows:
   test-deploy:
     jobs:
@@ -110,9 +71,6 @@ workflows:
           context: circleci-orb-publishing
           filters: *filters
       - test_set_env_vars_for_pip:
-          context: circleci-orb-publishing
-          filters: *filters
-      - test-setup_env_vars:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
