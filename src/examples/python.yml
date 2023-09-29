@@ -24,7 +24,7 @@ usage:
         - checkout
         - cloudsmith-circleci/authenticate_with_oidc:
             service_identifier: "your-service-identifier"
-        - cloudsmith-circleci/configure_pip:
+        - cloudsmith-circleci/configure_pip_index_url:
             repository_identifier: "your-repository-identifier"
         - run:
             name: Install Python dependencies

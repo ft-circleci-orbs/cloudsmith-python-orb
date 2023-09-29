@@ -71,7 +71,7 @@ jobs:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
           service_identifier: "circleci-orb-testing"
-      - cloudsmith-circleci/configure_pip:
+      - cloudsmith-circleci/configure_pip_index_url:
           repository_identifier: "financial-times-internal-releases"
       - run:
           name: Assert environment variables have been set
