@@ -47,7 +47,7 @@ jobs:
 
   test-set_env_vars_for_pip:
     docker:
-      - image: cimg/base:current
+      - image: cimg/python:current
     steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
@@ -66,7 +66,7 @@ jobs:
 
   test-configure_pip_index_url:
     docker:
-      - image: cimg/base:current
+      - image: cimg/python:current
     steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
@@ -96,7 +96,7 @@ workflows:
       - test-set_env_vars_for_pip:
           context: circleci-orb-publishing
           filters: *filters
-      - test-configure_pip:
+      - test-configure_pip_index_url:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
