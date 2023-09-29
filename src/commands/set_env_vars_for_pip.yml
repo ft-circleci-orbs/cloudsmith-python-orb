@@ -1,7 +1,7 @@
-description: |
-  Generates a pip index url string to use for the requested repository.
-  Sets the CLOUDSMITH_PIP_INDEX_URL environment variable.
-  Note: Depends on the authenticate-with-oidc command being run first.
+description:
+  Generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
+  
+  Depends on authenticate-with-oidc.
 parameters:
   repository_identifier:
     description: The identity/slug of the Cloudsmith repository
