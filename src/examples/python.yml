@@ -3,14 +3,14 @@ description: >
 usage:
   version: 2.1
   orbs:
-    cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.2.3
+    cloudsmith-circleci: ft-circleci-orbs/cloudsmith-circleci@1.2.3
   jobs:
     install_python_dependencies_from_cloudsmith:
       docker:
         - image: cimg/python:3.9
       steps:
         - checkout
-        - cloudsmith-oidc/set_env_vars_for_pip:
+        - cloudsmith-circleci/set_env_vars_for_pip:
             repository: "your-repository-identifier"
             service: "your-service-identifier"
         - run:
