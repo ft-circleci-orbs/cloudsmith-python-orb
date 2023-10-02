@@ -15,7 +15,7 @@ usage:
             service_identifier: "your-service-identifier"
         - run:
             name: Install Python dependencies
-            command: python -m pip install -r requirements.txt --index-url=$CLOUDSMITH_PIP_INDEX_URL
+            command: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
   workflows:
     use-my-orb:
       jobs:
