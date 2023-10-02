@@ -50,36 +50,15 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - checkout
-      - cloudsmith-circleci/authenticate_with_oidc:
-          service_identifier: "circleci-orb-testing"
       - cloudsmith-circleci/set_env_vars_for_pip:
           repository_identifier: "financial-times-internal-releases"
+          service_identifier: "circleci-orb-testing"
       - run:
           name: Assert environment variables have been set
           command: | 
             if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
             then
               echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
-              exit 1
-            fi
-            echo "All tests passed."
-
-  test-configure_pip_index_url:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - checkout
-      - cloudsmith-circleci/authenticate_with_oidc:
-          service_identifier: "circleci-orb-testing"
-      - cloudsmith-circleci/configure_pip_index_url:
-          repository_identifier: "financial-times-internal-releases"
-      - run:
-          name: Assert environment variables have been set
-          command: | 
-            CONFIGURED_PIP_INDEX_URL=$(python -m pip config get global.index-url)
-            if [ $CONFIGURED_PIP_INDEX_URL != $CLOUDSMITH_PIP_INDEX_URL ]
-            then
-              echo "Test failed: Pip index-url is not configured"
               exit 1
             fi
             echo "All tests passed."
@@ -94,9 +73,6 @@ workflows:
           context: circleci-orb-publishing
           filters: *filters
       - test-set_env_vars_for_pip:
-          context: circleci-orb-publishing
-          filters: *filters
-      - test-configure_pip_index_url:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.

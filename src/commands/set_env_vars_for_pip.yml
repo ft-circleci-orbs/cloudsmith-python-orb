@@ -6,11 +6,16 @@ parameters:
   repository_identifier:
     description: The identity/slug of the Cloudsmith repository
     type: string
+  service_identifier:
+    description: The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
+    type: string
 steps:
+  - authenticate_with_oidc
+      service_identifier: <<parameters.service_identifier>>
   - run:
-      name: Export parameters for script
+      name: Prepare script parameters
       command: |
         echo "export CLOUDSMITH_REPOSITORY_IDENTIFIER=\"<<parameters.repository_identifier>>\"" >> $BASH_ENV
   - run:
-      name: Setup environment variables for pip
+      name: Set environment variables for pip
       command: <<include(scripts/set_env_vars_for_pip.sh)>>
