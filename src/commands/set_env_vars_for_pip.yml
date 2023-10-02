@@ -10,7 +10,7 @@ parameters:
     description: The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
     type: string
 steps:
-  - authenticate_with_oidc
+  - authenticate_with_oidc:
       service_identifier: <<parameters.service_identifier>>
   - run:
       name: Prepare script parameters
