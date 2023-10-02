@@ -1,7 +1,5 @@
 description:
-  Generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
-
-  Depends on authenticate-with-oidc.
+  Authenticates to Cloudsmith and generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
 parameters:
   repository_identifier:
     description: The identity/slug of the Cloudsmith repository
