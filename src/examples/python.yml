@@ -7,15 +7,15 @@ usage:
   jobs:
     install_python_dependencies_from_cloudsmith:
       docker:
-        - image: cimg/python:current
+        - image: cimg/python:3.9
       steps:
         - checkout
-        - cloudsmith-circleci/setup_env_vars:
+        - cloudsmith-circleci/set_env_vars_for_pip:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
         - run:
             name: Install Python dependencies
-            command: pip install -r requirements.txt --index-url=$CLOUDSMITH_PIP_INDEX_URL
+            command: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
   workflows:
     use-my-orb:
       jobs:

@@ -1,0 +1,17 @@
+description:
+  Utility command to authenticate with Cloudsmith using OpenID Connect (OIDC) and if successful generate a short-lived
+  OIDC token for use in subsequent requests to cloudsmith. The token is valid for up to 2 hours.
+
+  The environment variables CLOUDSMITH_SERVICE_IDENTIFIER and CLOUDSMITH_OIDC_TOKEN are set.
+parameters:
+  service_identifier:
+    description: The identity/slug of the Cloudsmith service account to use when authenticating
+    type: string
+steps:
+  - run:
+      name: Prepare script parameters
+      command: |
+        echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> $BASH_ENV
+  - run:
+      name: Authenticate with OIDC and generate a temporary OIDC token
+      command: <<include(scripts/authenticate_with_oidc.sh)>>
