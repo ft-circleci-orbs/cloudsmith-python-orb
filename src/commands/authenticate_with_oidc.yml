@@ -9,7 +9,7 @@ parameters:
     type: string
 steps:
   - run:
-      name: Export Cloudsmith service_identifier for script
+      name: Prepare script parameters
       command: |
         echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> $BASH_ENV
   - run:
