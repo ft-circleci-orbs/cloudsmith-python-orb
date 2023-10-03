@@ -1,5 +1,5 @@
 description: >
-  Install dependencies from Cloudsmith using pip
+  Pip install dependencies from Cloudsmith.
 usage:
   version: 2.1
   orbs:

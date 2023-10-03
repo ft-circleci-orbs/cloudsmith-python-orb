@@ -1,5 +1,5 @@
 description: >
-  Configure pip index url and then install dependencies from Cloudsmith
+  Configure pip and install dependencies from Cloudsmith.
 usage:
   version: 2.1
   orbs:
