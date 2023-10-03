@@ -1,0 +1,30 @@
+description: >
+  Publish a Python package to Cloudsmith using twine
+usage:
+  version: 2.1
+  orbs:
+    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+  jobs:
+    publish_python_package_to_cloudsmith:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+
+        ... prepare distribution
+
+        - ft-cloudsmith/set_env_vars_for_twine:
+            repository_identifier: "your-repository-identifier"
+            service_identifier: "your-service-identifier"
+        - run:
+            name: Publish Python package to Cloudsmith
+            command: |
+              twine upload \
+                  --username $CLOUDSMITH_TWINE_USERNAME \
+                  --password $CLOUDSMITH_TWINE_PASSWORD \
+                  --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
+                  dist/*
+  workflows:
+    use-my-orb:
+      jobs:
+        - publish_python_package_to_cloudsmith
