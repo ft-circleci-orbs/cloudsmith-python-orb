@@ -33,6 +33,11 @@ jobs:
       - run:
           name: Assert environment variables have been set
           command: | 
+            if [ $CLOUDSMITH_ORGANISATION != "financial-times" ]
+            then
+              echo "Test failed: CLOUDSMITH_ORGANISATION has not been set correctly."
+              exit 1
+            fi
             if [ $CLOUDSMITH_SERVICE_IDENTIFIER != "circleci-orb-testing" ]
             then
               echo "Test failed: CLOUDSMITH_SERVICE_IDENTIFIER has not been set."
@@ -56,6 +61,11 @@ jobs:
       - run:
           name: Assert environment variables have been set
           command: | 
+            if [ $CLOUDSMITH_DOWNLOADS_DOMAIN != "packages.ft.com" ]
+            then
+              echo "Test failed: CLOUDSMITH_DOWNLOADS_DOMAIN has not been set correctly."
+              exit 1
+            fi
             if [ -z $CLOUDSMITH_PIP_INDEX_URL ]
             then
               echo "Test failed: CLOUDSMITH_PIP_INDEX_URL has not been set."
