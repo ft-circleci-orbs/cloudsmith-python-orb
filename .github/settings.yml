@@ -1,4 +1,6 @@
 # These settings are synced to GitHub by https://probot.github.io/apps/settings/
+# Once installed, the app is accessible to all repositories within a GitHub Organization. 
+# The app must be re-installed for new Organizations.
 
 repository:
   # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
