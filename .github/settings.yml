@@ -1,87 +1,88 @@
 # These settings are synced to GitHub by https://probot.github.io/apps/settings/
+# Once installed, the app is accessible to all repositories within a GitHub Organization, but must be re-installed for new Organizations.
 
 repository:
   # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
 
   # The name of the repository. Changing this will rename the repository
-  name: cloudsmith-circleci-orb
+  # name: repo-name
 
   # A short description of the repository that will show up on GitHub
-  description: A CircleCI orb to assist with downloading from and publishing packages to Cloudsmith.
+  # description: description of repo
 
   # A URL with more information about the repository
-  homepage: https://example.github.io/
+  # homepage: https://example.github.io/
 
   # A comma-separated list of topics to set on the repository
-  topics: github, probot
+  topics: code-management
 
   # Either `true` to make the repository private, or `false` to make it public.
-  private: true
+  # private: false
 
   # Either `true` to enable issues for this repository, `false` to disable them.
-  has_issues: true
+  # has_issues: true
 
   # Either `true` to enable projects for this repository, or `false` to disable them.
   # If projects are disabled for the organization, passing `true` will cause an API error.
   has_projects: true
 
   # Either `true` to enable the wiki for this repository, `false` to disable it.
-  has_wiki: true
+  # has_wiki: true
 
   # Either `true` to enable downloads for this repository, `false` to disable them.
-  has_downloads: true
+  # has_downloads: true
 
   # Updates the default branch for this repository.
   default_branch: main
 
   # Either `true` to allow squash-merging pull requests, or `false` to prevent
   # squash-merging.
-  allow_squash_merge: true
+  # allow_squash_merge: true
 
   # Either `true` to allow merging pull requests with a merge commit, or `false`
   # to prevent merging pull requests with merge commits.
-  allow_merge_commit: true
+  # allow_merge_commit: true
 
   # Either `true` to allow rebase-merging pull requests, or `false` to prevent
   # rebase-merging.
-  allow_rebase_merge: true
+  # allow_rebase_merge: true
 
   # Either `true` to enable automatic deletion of branches on merge, or `false` to disable
   delete_branch_on_merge: true
 
   # Either `true` to enable automated security fixes, or `false` to disable
   # automated security fixes.
-  enable_automated_security_fixes: true
+  # enable_automated_security_fixes: true
 
   # Either `true` to enable vulnerability alerts, or `false` to disable
   # vulnerability alerts.
-  enable_vulnerability_alerts: true
+  # enable_vulnerability_alerts: true
 
 # Labels: define labels for Issues and Pull Requests
-labels:
-  - name: bug
-    color: CC0000
-    description: An issue with the system 🐛.
+# labels:
+#   - name: bug
+#     color: CC0000
+#     description: An issue with the system 🐛.
 
-  - name: feature
-    # If including a `#`, make sure to wrap it with quotes!
-    color: '#336699'
-    description: New functionality.
+#   - name: feature
+#     # If including a `#`, make sure to wrap it with quotes!
+#     color: '#336699'
+#     description: New functionality.
 
-  - name: Help Wanted
-    # Provide a new name to rename an existing label
-    new_name: first-timers-only
+#   - name: Help Wanted
+#     # Provide a new name to rename an existing label
+#     new_name: first-timers-only
 
 # Milestones: define milestones for Issues and Pull Requests
-milestones:
-  - title: milestone-title
-    description: milestone-description
-    # The state of the milestone. Either `open` or `closed`
-    state: open
+# milestones:
+#   - title: milestone-title
+#     description: milestone-description
+#     # The state of the milestone. Either `open` or `closed`
+#     state: open
 
 # Collaborators: give specific users access to this repository.
 # See https://docs.github.com/en/rest/reference/repos#add-a-repository-collaborator for available options
-collaborators:
+# collaborators:
   # - username: bkeepers
   #   permission: push
   # - username: hubot
@@ -97,7 +98,7 @@ collaborators:
 
 # See https://docs.github.com/en/rest/reference/teams#add-or-update-team-repository-permissions for available options
 teams:
-  - name: core
+  - name: code-management
     # The permission to grant the team. Can be one of:
     # * `pull` - can pull, but not push to or administer this repository.
     # * `push` - can pull and push, but not administer this repository.
@@ -105,8 +106,8 @@ teams:
     # * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
     # * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
     permission: admin
-  - name: docs
-    permission: push
+  # - name: docs
+  #   permission: push
 
 branches:
   - name: main
@@ -118,7 +119,7 @@ branches:
         # The number of approvals required. (1-6)
         required_approving_review_count: 1
         # Dismiss approved reviews automatically when a new commit is pushed.
-        dismiss_stale_reviews: true
+        dismiss_stale_reviews: false
         # Blocks merge until code owners have reviewed.
         require_code_owner_reviews: true
         # Specify which users and teams can dismiss pull request reviews. Pass an empty dismissal_restrictions object to disable. User and team dismissal_restrictions are only available for organization-owned repositories. Omit this parameter for personal repositories.
