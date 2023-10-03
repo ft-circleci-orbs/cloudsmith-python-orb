@@ -4,7 +4,7 @@ orbs:
   # Reference your orb's jobs and commands below as they will exist when built.
   orb-tools: circleci/orb-tools@12.0
   # The orb definition is intentionally not included here. It will be injected into the pipeline.
-  ft-cloudsmith: {}
+  cloudsmith-circleci: {}
 
 # Use this tag to ensure test jobs always run,
 # even though the downstream publish job will only run on release tags.
@@ -28,7 +28,7 @@ jobs:
       - image: cimg/base:current
     steps:
       - checkout
-      - ft-cloudsmith/authenticate_with_oidc:
+      - cloudsmith-circleci/authenticate_with_oidc:
           service_identifier: "circleci-orb-testing"
       - run:
           name: Assert environment variables have been set
@@ -50,7 +50,7 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - checkout
-      - ft-cloudsmith/set_env_vars_for_pip:
+      - cloudsmith-circleci/set_env_vars_for_pip:
           repository_identifier: "financial-times-internal-releases"
           service_identifier: "circleci-orb-testing"
       - run:
