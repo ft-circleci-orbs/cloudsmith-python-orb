@@ -16,7 +16,7 @@ steps:
           echo "export CLOUDSMITH_ORGANISATION=\"financial-times\"" >> "$BASH_ENV"
         fi
   - run:
-      name: Configure Cloudsmith service
+      name: Configure Cloudsmith service account
       command: |
         echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> "$BASH_ENV"
   - run:
