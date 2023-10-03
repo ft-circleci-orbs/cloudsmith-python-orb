@@ -17,6 +17,7 @@ steps:
       name: Configure Cloudsmith repository
       command: |
         echo "export CLOUDSMITH_REPOSITORY_IDENTIFIER=\"<<parameters.repository_identifier>>\"" >> $BASH_ENV
+        echo "CLOUDSMITH_REPOSITORY_IDENTIFIER=$CLOUDSMITH_REPOSITORY_IDENTIFIER"
   - run:
       name: Set environment variables for pip
       command: <<include(scripts/set_env_vars_for_pip.sh)>>
