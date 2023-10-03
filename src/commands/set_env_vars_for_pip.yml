@@ -12,7 +12,7 @@ steps:
       service_identifier: <<parameters.service_identifier>>
   - run:
       name: Configure Cloudsmith domains
-      command: | 
+      command: |
         <<include(scripts/configure_cloudsmith_domains.sh)>>
   - run:
       name: Configure Cloudsmith repository
@@ -20,5 +20,5 @@ steps:
         echo "export CLOUDSMITH_REPOSITORY_IDENTIFIER=\"<<parameters.repository_identifier>>\"" >> $BASH_ENV
   - run:
       name: Set environment variables for pip
-      command: | 
+      command: |
         <<include(scripts/set_env_vars_for_pip.sh)>>
