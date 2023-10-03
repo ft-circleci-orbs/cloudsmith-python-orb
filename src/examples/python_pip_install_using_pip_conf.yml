@@ -1,5 +1,5 @@
 description: >
-  Install dependencies from Cloudsmith using pip
+  Configure pip index url and then install dependencies from Cloudsmith
 usage:
   version: 2.1
   orbs:
@@ -14,9 +14,13 @@ usage:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
         - run:
+            name: pip configure repository
+            command: |
+              python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
+        - run:
             name: pip install
             command: |
-              python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+              python -m pip install -r requirements.txt
   workflows:
     use-my-orb:
       jobs:
