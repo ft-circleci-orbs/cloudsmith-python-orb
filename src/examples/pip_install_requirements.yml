@@ -5,7 +5,7 @@ usage:
   orbs:
     ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
   jobs:
-    pip_install_requirements:
+    build:
       docker:
         - image: cimg/python:3.9
       steps:
@@ -15,6 +15,6 @@ usage:
             service_identifier: "your-service-identifier"
         - run: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
   workflows:
-    examples:
+    main:
       jobs:
-        - pip_install_requirements
+        - build
