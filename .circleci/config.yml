@@ -21,7 +21,7 @@ workflows:
       - shellcheck/check:
           filters: *filters
       - orb-tools/publish:
-          orb_name: ft-circleci-orbs/cloudsmith-circleci
+          orb_name: ft-circleci-orbs/ft-cloudsmith
           vcs_type: << pipeline.project.type >>
           requires:
             - orb-tools/lint
