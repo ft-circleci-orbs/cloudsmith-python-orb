@@ -1,5 +1,5 @@
 description: >
-  Python usage examples.
+  Install dependencies from Cloudsmith using pip
 usage:
   version: 2.1
   orbs:
