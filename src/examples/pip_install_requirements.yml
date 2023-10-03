@@ -1,0 +1,20 @@
+description: >
+  Pip install requirements from Cloudsmith.
+usage:
+  version: 2.1
+  orbs:
+    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+  jobs:
+    pip_install_requirements:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        - ft-cloudsmith/set_env_vars_for_pip:
+            repository_identifier: "your-repository-identifier"
+            service_identifier: "your-service-identifier"
+        - run: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+  workflows:
+    examples:
+      jobs:
+        - pip_install_requirements

@@ -1,0 +1,20 @@
+description: >
+  Pip install a package from Cloudsmith.
+usage:
+  version: 2.1
+  orbs:
+    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+  jobs:
+    pip_install_package:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        - ft-cloudsmith/set_env_vars_for_pip:
+            repository_identifier: "your-repository-identifier"
+            service_identifier: "your-service-identifier"
+        - run: python -m pip install your-package==0.0.0 --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+  workflows:
+    cloudsmith_orb_example:
+      jobs:
+        - pip_install_package
