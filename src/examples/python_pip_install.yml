@@ -5,7 +5,8 @@ usage:
   orbs:
     ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
   jobs:
-    install_python_package_from_cloudsmith:
+    
+    pip_install_package:
       docker:
         - image: cimg/python:3.9
       steps:
@@ -13,8 +14,9 @@ usage:
         - ft-cloudsmith/set_env_vars_for_pip:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
-        - run: python -m pip install your-package==1.0.0 --index-url "$CLOUDSMITH_PIP_INDEX_URL"
-    install_python_requirements_from_cloudsmith:
+        - run: python -m pip install your-package==0.0.0 --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+
+    pip_install_requirements:
       docker:
         - image: cimg/python:3.9
       steps:
@@ -23,7 +25,8 @@ usage:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
         - run: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
-    configure_pip_and_install_python_requirements_from_cloudsmith:
+
+    configure_pip_and_install_requirements:
       docker:
         - image: cimg/python:3.9
       steps:
@@ -37,6 +40,6 @@ usage:
   workflows:
     use-my-orb:
       jobs:
-        - install_python_package_from_cloudsmith
-        - install_python_requirements_from_cloudsmith
-        - configure_pip_and_install_python_requirements_from_cloudsmith
+        - pip_install_package
+        - pip_install_requirements
+        - configure_pip_and_install_requirements
