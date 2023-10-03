@@ -13,14 +13,9 @@ usage:
         - ft-cloudsmith/set_env_vars_for_pip:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
-        - run:
-            name: pip configure repository
-            command: |
-              python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
-        - run:
-            name: pip install
-            command: |
-              python -m pip install -r requirements.txt
+        - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
+        - run: python -m pip install -r requirements.txt
+
   workflows:
     use-my-orb:
       jobs:
