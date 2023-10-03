@@ -5,17 +5,23 @@
 
 set +e
 
+if [ -z "$CLOUDSMITH_ORGANISATION" ]
+then
+  echo "Unable to generate OIDC token. Environment variable CLOUDSMITH_ORGANISATION is not set."
+  exit 1
+fi
+
 if [ -z "$CLOUDSMITH_SERVICE_IDENTIFIER" ]
 then
   echo "Unable to generate OIDC token. Environment variable CLOUDSMITH_SERVICE_IDENTIFIER is not set."
   exit 1
 fi
 
-echo "Generating Cloudsmith OIDC token for service account: $CLOUDSMITH_SERVICE_IDENTIFIER"
+echo "Generating Cloudsmith OIDC token for service account: $CLOUDSMITH_ORGANISATION/$CLOUDSMITH_SERVICE_IDENTIFIER"
 
 RESPONSE=$(curl -X POST -H "Content-Type: application/json" \
             -d "{\"oidc_token\":\"$CIRCLE_OIDC_TOKEN_V2\", \"service_slug\":\"$CLOUDSMITH_SERVICE_IDENTIFIER\"}" \
-            --silent --show-error "https://api.cloudsmith.io/openid/financial-times/")
+            --silent --show-error "https://api.cloudsmith.io/openid/$CLOUDSMITH_ORGANISATION/")
 
 CLOUDSMITH_OIDC_TOKEN=$(echo "$RESPONSE" | grep -o '"token": "[^"]*' | grep -o '[^"]*$')
 

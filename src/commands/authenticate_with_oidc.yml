@@ -9,9 +9,16 @@ parameters:
     type: string
 steps:
   - run:
-      name: Prepare script parameters
+      name: Configure Cloudsmith organisation
       command: |
-        echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> $BASH_ENV
+        if [ -z "$CLOUDSMITH_ORGANISATION" ]
+        then
+          echo "export CLOUDSMITH_ORGANISATION=\"financial-times\"" >> "$BASH_ENV"
+        fi
   - run:
-      name: Authenticate with OIDC and generate a temporary OIDC token
+      name: Configure Cloudsmith service account
+      command: |
+        echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> "$BASH_ENV"
+  - run:
+      name: Authenticate with OIDC
       command: <<include(scripts/authenticate_with_oidc.sh)>>
