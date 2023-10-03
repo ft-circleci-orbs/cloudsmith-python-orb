@@ -15,12 +15,10 @@ steps:
         then
           echo "export CLOUDSMITH_ORGANISATION=\"financial-times\"" >> "$BASH_ENV"
         fi
-        echo "CLOUDSMITH_ORGANISATION=$CLOUDSMITH_ORGANISATION"
   - run:
       name: Configure Cloudsmith service
       command: |
         echo "export CLOUDSMITH_SERVICE_IDENTIFIER=\"<<parameters.service_identifier>>\"" >> "$BASH_ENV"
-        echo "CLOUDSMITH_SERVICE_IDENTIFIER=$CLOUDSMITH_SERVICE_IDENTIFIER"
   - run:
       name: Authenticate with OIDC
       command: <<include(scripts/authenticate_with_oidc.sh)>>
