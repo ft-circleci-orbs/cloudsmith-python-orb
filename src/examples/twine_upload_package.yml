@@ -10,12 +10,15 @@ usage:
         - image: cimg/python:3.9
       steps:
         - checkout
-        - run:
-            name: Prepare Distribution
-            command: echo "Create code distribution here."
         - ft-cloudsmith/set_env_vars_for_twine:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
+        - run:
+            name: Prepare Distribution
+            command: echo "Create code distribution here."
+        - run:
+            name: Install twine
+            command: python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"     
         - run:
             name: Publish Python package to Cloudsmith
             command: |
