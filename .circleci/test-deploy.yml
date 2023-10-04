@@ -106,7 +106,7 @@ workflows:
             - orb-tools/pack
             - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
-            - test_python_version
+            - test-python_version
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
