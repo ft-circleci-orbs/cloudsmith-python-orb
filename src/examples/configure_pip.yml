@@ -1,11 +1,11 @@
 description: >
-  Install dependencies from Cloudsmith using pip
+  Configure pip and install requirements from Cloudsmith.
 usage:
   version: 2.1
   orbs:
     ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
   jobs:
-    install_python_dependencies_from_cloudsmith:
+    build:
       docker:
         - image: cimg/python:3.9
       steps:
@@ -13,10 +13,9 @@ usage:
         - ft-cloudsmith/set_env_vars_for_pip:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
-        - run:
-            name: Install Python dependencies
-            command: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+        - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
+        - run: python -m pip install -r requirements.txt
   workflows:
-    use-my-orb:
+    main:
       jobs:
-        - install_python_dependencies_from_cloudsmith
+        - build
