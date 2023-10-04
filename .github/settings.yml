@@ -1,4 +1,5 @@
 # These settings are synced to GitHub by https://probot.github.io/apps/settings/
+# Make sure you install the app for new GitHub Orgs
 
 repository:
   default_branch: main
