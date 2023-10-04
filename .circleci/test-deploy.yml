@@ -73,6 +73,12 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-python_version:
+    docker:
+      - image: cimg/base:2023.01
+    steps:
+      - checkout
+      - run: python --version
 
 workflows:
   test-deploy:
@@ -83,6 +89,9 @@ workflows:
           context: circleci-orb-publishing
           filters: *filters
       - test-set_env_vars_for_pip:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-python_version:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
