@@ -5,14 +5,14 @@ usage:
   orbs:
     ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
   jobs:
-    publish_python_package_to_cloudsmith:
+    build:
       docker:
         - image: cimg/python:3.9
       steps:
         - checkout
-
-        ... prepare distribution
-
+        - run:
+            name: Prepare Distribution
+            command: echo "Create code distribution here."
         - ft-cloudsmith/set_env_vars_for_twine:
             repository_identifier: "your-repository-identifier"
             service_identifier: "your-service-identifier"
@@ -25,6 +25,6 @@ usage:
                   --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
                   dist/*
   workflows:
-    use-my-orb:
+    main:
       jobs:
-        - publish_python_package_to_cloudsmith
+        - build
