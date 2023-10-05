@@ -10,10 +10,9 @@ A CircleCI orb to assist with downloading from and publishing packages to Clouds
 
 The orb commands need the following parameters:
 
-* `repository_identifier` : The identity/slug of the Cloudsmith repository
+* `repository` : The identity/slug of the Cloudsmith repository
 
-
-* `service_identifier` : The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
+* `service_account` : The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
 
 This can be found in the [Cloudsmith UI](https://cloudsmith.io/orgs/financial-times/).
 
