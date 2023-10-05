@@ -1,23 +1,23 @@
 description:
   Authenticates to Cloudsmith and generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
 parameters:
-  repository_identifier:
+  repository:
     description: The identity/slug of the Cloudsmith repository
     type: string
-  service_identifier:
+  service_account:
     description: The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
     type: string
 steps:
   - authenticate_with_oidc:
-      service_identifier: <<parameters.service_identifier>>
+      service_account: <<parameters.service_account>>
   - run:
       name: Configure Cloudsmith domains
       command: <<include(scripts/configure_cloudsmith_domains.sh)>>
   - run:
       name: Configure Cloudsmith repository
       command: |
-        echo "export CLOUDSMITH_REPOSITORY_IDENTIFIER=\"<<parameters.repository_identifier>>\"" >> $BASH_ENV
-        echo "CLOUDSMITH_REPOSITORY_IDENTIFIER=<<parameters.repository_identifier>>"
+        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
+        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
   - run:
       name: Set environment variables for pip
       command: <<include(scripts/set_env_vars_for_pip.sh)>>
