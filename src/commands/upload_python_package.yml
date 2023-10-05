@@ -12,7 +12,7 @@ parameters:
     type: string
 steps:
   - run:
-      name: Install Cloudsmith CLI
+      name: Cloudsmith - Install CLI
       command: |
         python -m ensurepip --upgrade
 
@@ -28,7 +28,7 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - run:
-      name: Upload package to Cloudsmith
+      name: Cloudsmith - Upload package
       command: |
         echo ""
         echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."

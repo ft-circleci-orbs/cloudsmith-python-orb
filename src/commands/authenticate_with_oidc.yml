@@ -9,7 +9,7 @@ parameters:
     type: string
 steps:
   - run:
-      name: Configure Cloudsmith organisation and service account
+      name: Cloudsmith - Configure organisation and service account
       command: |
         if [ -z "$CLOUDSMITH_ORGANISATION" ]
         then
@@ -17,5 +17,5 @@ steps:
         fi
         echo "export CLOUDSMITH_SERVICE_ACCOUNT=\"<<parameters.service_account>>\"" >> "$BASH_ENV"
   - run:
-      name: Authenticate with Cloudsmith using OIDC
+      name: Cloudsmith - Authenticate with OIDC
       command: <<include(scripts/authenticate_with_oidc.sh)>>
