@@ -1,0 +1,21 @@
+description: >
+  Upload a python package to Cloudsmith.
+usage:
+  version: 2.1
+  orbs:
+    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+  jobs:
+    build:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        - run: python setup.py bdist_wheel --universal
+        - ft-cloudsmith/upload_python_package:
+            repository_identifier: "your-repository-identifier"
+            service_identifier: "your-service-identifier"
+            package_path: dist/*
+  workflows:
+    main:
+      jobs:
+        - build

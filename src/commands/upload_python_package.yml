@@ -1,0 +1,33 @@
+description:
+  Upload a python package
+parameters:
+  repository:
+    description: The identity/slug of the Cloudsmith repository
+    type: string
+  service_account:
+    description: The identity/slug of the Cloudsmith service account to use when authenticating
+    type: string
+  package_path:
+    description: The location of the package files to upload
+    type: string
+steps:
+  - authenticate_with_oidc:
+      service_identifier: <<parameters.service_account>>
+  - run:
+      name: Install Cloudsmith CLI
+      command: | 
+        if ! command -v pip &> /dev/null
+        then
+          sudo apt update
+          sudo apt install python3-pip
+        fi
+        python3 -m pip install --upgrade cloudsmith-cli --index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+  - run:
+      name: Configure Cloudsmith CLI Credentials
+      command: |
+        echo "export CLOUDSMITH_API_KEY=\"$CLOUDSMITH_OIDC_TOKEN\" >> $BASH_ENV
+  - run:
+      name: Upload package to Cloudsmith
+      command: |
+        cloudsmith push python $CLOUDSMITH_ORGANISATION/<<parameters.repository>> <<parameters.package_path>>
+        
