@@ -1,5 +1,5 @@
 description:
-  Upload a python package
+  Upload a python package using the Cloudsmith CLI
 parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
@@ -11,8 +11,6 @@ parameters:
     description: The location of the package files to upload
     type: string
 steps:
-  - authenticate_with_oidc:
-      service_account: <<parameters.service_account>>
   - run:
       name: Install Cloudsmith CLI
       command: |
@@ -27,6 +25,8 @@ steps:
         echo "Cloudsmith CLI installed OK."
 
         cloudsmith --version
+  - authenticate_with_oidc:
+      service_account: <<parameters.service_account>>
   - run:
       name: Upload package to Cloudsmith
       command: |
