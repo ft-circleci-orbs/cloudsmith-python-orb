@@ -81,7 +81,7 @@ jobs:
       - run:
           name: Prepare distribution
           command: python setup.py sdist
-          working_directory: simplepkg-py
+          working_directory: .circleci/simplepkg-py
 
 #      - cloudsmith-circleci/upload_python_package:
 #          repository: "circleci-orb-testing"
