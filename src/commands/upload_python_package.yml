@@ -17,7 +17,7 @@ steps:
       name: Install Cloudsmith CLI
       command: |
         python -m ensurepip --upgrade
-        
+
         echo ""
         echo "Installing cloudsmith-cli using pip ..."
 
@@ -37,4 +37,3 @@ steps:
 
         echo ""
         echo "Package upload and synchronisation completed OK."
-        
