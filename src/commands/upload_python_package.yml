@@ -12,10 +12,10 @@ parameters:
     type: string
 steps:
   - authenticate_with_oidc:
-      service_identifier: <<parameters.service_account>>
+      service_account: <<parameters.service_account>>
   - run:
       name: Install Cloudsmith CLI
-      command: | 
+      command: |
         if ! command -v pip &> /dev/null
         then
           sudo apt update
@@ -30,4 +30,3 @@ steps:
       name: Upload package to Cloudsmith
       command: |
         cloudsmith push python $CLOUDSMITH_ORGANISATION/<<parameters.repository>> <<parameters.package_path>>
-        
