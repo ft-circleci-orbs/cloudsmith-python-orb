@@ -25,7 +25,7 @@ steps:
   - run:
       name: Configure Cloudsmith CLI Credentials
       command: |
-        echo "export CLOUDSMITH_API_KEY=\"$CLOUDSMITH_OIDC_TOKEN\" >> $BASH_ENV
+        echo "export CLOUDSMITH_API_KEY=\"$CLOUDSMITH_OIDC_TOKEN\"" >> $BASH_ENV
   - run:
       name: Upload package to Cloudsmith
       command: |
