@@ -12,8 +12,8 @@ usage:
         - checkout
         - run: python setup.py bdist_wheel --universal
         - ft-cloudsmith/upload_python_package:
-            repository_identifier: "your-repository-identifier"
-            service_identifier: "your-service-identifier"
+            repository: "your-repository-identifier"
+            service_account: "your-service-identifier"
             package_path: dist/*
   workflows:
     main:
