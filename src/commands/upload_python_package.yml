@@ -21,7 +21,7 @@ steps:
           sudo apt update
           sudo apt install python3-pip
         fi
-        python3 -m pip install cloudsmith-cli==1.1.1 --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+        python -m pip install cloudsmith-cli==1.1.1 --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
   - run:
       name: Configure Cloudsmith CLI Credentials
       command: |
@@ -29,4 +29,4 @@ steps:
   - run:
       name: Upload package to Cloudsmith
       command: |
-        cloudsmith push python $CLOUDSMITH_ORGANISATION/<<parameters.repository>> <<parameters.package_path>>
+        cloudsmith push python "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
