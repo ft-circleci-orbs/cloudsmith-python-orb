@@ -21,7 +21,7 @@ steps:
           sudo apt update
           sudo apt install python3-pip
         fi
-        python3 -m pip install --upgrade cloudsmith-cli --index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+        python3 -m pip install cloudsmith-cli==1.1.1 --index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
   - run:
       name: Configure Cloudsmith CLI Credentials
       command: |
