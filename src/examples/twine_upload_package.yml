@@ -11,11 +11,14 @@ usage:
       steps:
         - checkout
         - ft-cloudsmith/set_env_vars_for_twine:
-            repository_identifier: "your-repository-identifier"
-            service_identifier: "your-service-identifier"
+            repository: "your-repository-id"
+            service_account: "your-service-account-id"
+        - run: 
+            name: Install pip
+            command: python -m ensurepip --upgrade
         - run:
             name: Prepare Distribution
-            command: echo "Create code distribution here."
+            command: cd python-package-example/simplepkg && python setup.py sdist
         - run:
             name: Install twine
             command: python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"
@@ -26,7 +29,7 @@ usage:
                   --username $CLOUDSMITH_TWINE_USERNAME \
                   --password $CLOUDSMITH_TWINE_PASSWORD \
                   --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
-                  dist/*
+                  python-package-example/dist/*
   workflows:
     main:
       jobs:
