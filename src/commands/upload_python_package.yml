@@ -19,11 +19,7 @@ steps:
         python -m ensurepip --upgrade
         pip install cloudsmith-cli==1.1.1 --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
         cloudsmith --version
-#  - run:
-#      name: Configure Cloudsmith CLI Credentials
-#      command: |
-#        echo "export CLOUDSMITH_API_KEY=\"$CLOUDSMITH_OIDC_TOKEN\"" >> $BASH_ENV
-#  - run:
-#      name: Upload package to Cloudsmith
-#      command: |
-#        cloudsmith push -k "$CLOUDSMITH_OIDC_TOKEN" python "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
+  - run:
+      name: Upload package to Cloudsmith
+      command: |
+        cloudsmith push -k "$CLOUDSMITH_OIDC_TOKEN" python "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
