@@ -13,7 +13,7 @@ usage:
         - ft-cloudsmith/set_env_vars_for_twine:
             repository: "your-repository-id"
             service_account: "your-service-account-id"
-        - run: 
+        - run:
             name: Install pip
             command: python -m ensurepip --upgrade
         - run:
