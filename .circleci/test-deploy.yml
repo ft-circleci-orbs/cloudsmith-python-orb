@@ -56,7 +56,7 @@ jobs:
     steps:
       - checkout
       - cloudsmith-circleci/set_env_vars_for_pip:
-          repository: "financial-times-internal-releases"
+          repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
       - run:
           name: Assert environment variables have been set
