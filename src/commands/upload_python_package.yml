@@ -22,5 +22,7 @@ steps:
   - run:
       name: Upload package to Cloudsmith
       command: |
+        echo $CLOUDSMITH_OIDC_TOKEN
+        echo $CLOUDSMITH_ORGANISATION
         CLOUDSMITH_API_KEY="$CLOUDSMITH_OIDC_TOKEN"
         cloudsmith push python "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
