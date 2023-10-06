@@ -78,7 +78,7 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - checkout
-      - cloudsmith-circleci/set_env_vars_for_pip:
+      - cloudsmith-circleci/set_env_vars_for_twine:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
       - run:
