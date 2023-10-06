@@ -7,9 +7,14 @@ parameters:
   service_account:
     description: The identity/slug of the Cloudsmith service account to use when authenticating
     type: string
-  package_path:
-    description: The location of the package files to upload
+  source_dist:
+    description: The path of the source distribution file to upload
     type: string
+    default: None
+  wheel:
+    description: The location of the wheel (.whl) file to upload
+    type: string
+    default: None
 steps:
   - run:
       name: Cloudsmith - Install CLI
@@ -27,13 +32,33 @@ steps:
         cloudsmith --version
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
-  - run:
-      name: Cloudsmith - Upload package
-      command: |
-        echo ""
-        echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-
-        cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
-
-        echo ""
-        echo "Package upload and synchronisation completed OK."
+  - when:
+      condition:
+        not:
+          equal: [ "", "<<parameters.source_dist>>"]
+      steps:
+        - run:
+            name: Cloudsmith - Upload source distribution
+            command: |
+              echo ""
+              echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+      
+              cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
+      
+              echo ""
+              echo "Package upload and synchronisation completed OK."
+  - when:
+      condition:
+        not:
+          equal: [ "", "<<parameters.wheel>>"]
+      steps:
+        - run:
+            name: Cloudsmith - Upload wheel distribution
+            command: |
+              echo ""
+              echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+      
+              cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
+      
+              echo ""
+              echo "Package upload and synchronisation completed OK."

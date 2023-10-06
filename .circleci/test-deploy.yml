@@ -110,10 +110,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - run: python -m ensurepip --upgrade
       - run:
-          name: Prepare package distribution
+          name: Prepare source and wheel distributions
           command: |
-            python -m ensurepip --upgrade
             python -m pip install build --upgrade --user
             python -m build
           working_directory: .circleci/simplepkg-py
@@ -131,7 +131,7 @@ jobs:
                 --username $CLOUDSMITH_TWINE_USERNAME \
                 --password $CLOUDSMITH_TWINE_PASSWORD \
                 --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
-                dist/simplepkg-0.0.1.tar.gz
+                dist/*
           working_directory: .circleci/simplepkg-py
 
   test-upload_python_package:
@@ -140,17 +140,18 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - run: python -m ensurepip --upgrade
       - run:
-          name: Prepare package distribution
+          name: Prepare source and wheel distributions
           command: |
-            python -m ensurepip --upgrade
             python -m pip install build --upgrade --user
             python -m build
           working_directory: .circleci/simplepkg-py
       - cloudsmith-circleci/upload_python_package:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
-          package_path: .circleci/simplepkg-py/dist/simplepkg-0.0.1.tar.gz
+          source_dist: .circleci/simplepkg-py/dist/your-package-0.0.1.tar.gz
+          wheel: .circleci/simplepkg-py/dist/simplepkg-0.0.1-py3-none-any.whl
 
 workflows:
   test-deploy:
