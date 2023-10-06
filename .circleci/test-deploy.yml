@@ -73,6 +73,34 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-set_env_vars_for_twine:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - cloudsmith-circleci/set_env_vars_for_pip:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run:
+          name: Assert environment variables have been set
+          command: | 
+            if [ $CLOUDSMITH_TWINE_REPOSITORY_URL != "https://python.cloudsmith.io/financial-times/circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_REPOSITORY_URL has not been set correctly."
+              exit 1
+            fi
+            if [ $CLOUDSMITH_TWINE_USERNAME != "circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_USERNAME has not been set correctly."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_TWINE_PASSWORD ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_PASSWORD has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
   test-upload_python_package:
     docker:
       - image: cimg/python:3.9
@@ -98,6 +126,9 @@ workflows:
       - test-set_env_vars_for_pip:
           context: circleci-orb-publishing
           filters: *filters
+      - test-set_env_vars_for_twine:
+          context: circleci-orb-publishing
+          filters: *filters
       - test-upload_python_package:
           context: circleci-orb-publishing
           filters: *filters
@@ -113,6 +144,7 @@ workflows:
             - orb-tools/pack
             - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
+            - test-set_env_vars_for_twine
             - test-upload_python_package
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
