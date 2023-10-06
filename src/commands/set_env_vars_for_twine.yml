@@ -1,4 +1,3 @@
-
 description:
   Authenticates to Cloudsmith and generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
 parameters:
