@@ -1,5 +1,5 @@
 description: >
-  Upload a python package to Cloudsmith.
+  Upload a python package to Cloudsmith using the Cloudsmith CLI.
 usage:
   version: 2.1
   orbs:

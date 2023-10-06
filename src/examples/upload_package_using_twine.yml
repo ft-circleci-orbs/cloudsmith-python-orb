@@ -1,5 +1,5 @@
 description: >
-  Publish a Python package to Cloudsmith using twine
+  Upload a python package to Cloudsmith using twine.
 usage:
   version: 2.1
   orbs:

@@ -1,5 +1,5 @@
 description: >
-  Pip install a package from Cloudsmith.
+  Install a package from Cloudsmith using pip.
 usage:
   version: 2.1
   orbs:

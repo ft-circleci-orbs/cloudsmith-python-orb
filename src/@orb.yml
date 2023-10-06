@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Use Cloudsmith to install and publish packages using short-lived OIDC credentials
+  Install packages from and publish packages to Cloudsmith using short-lived OIDC credentials
 display:
   home_url: "https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb"
   source_url: "https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb"

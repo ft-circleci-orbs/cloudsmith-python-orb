@@ -1,5 +1,7 @@
 description:
-  Authenticates to Cloudsmith and generates a pip index url string which is assigned to the CLOUDSMITH_PIP_INDEX_URL environment variable.
+  Generate temporary Cloudsmith credentials using OIDC and construct a repository URL for a specific Cloudsmith 
+  repository and service account. On completion the command sets the CLOUDSMITH_TWINE_REPOSITORY_URL, 
+  CLOUDSMITH_TWINE_USERNAME and CLOUDSMITH_TWINE_PASSWORD environment variables for use with twine.
 parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository

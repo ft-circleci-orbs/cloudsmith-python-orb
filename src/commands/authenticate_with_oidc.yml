@@ -1,8 +1,7 @@
 description:
   Utility command to authenticate with Cloudsmith using OpenID Connect (OIDC) and if successful generate a short-lived
-  OIDC token for use in subsequent requests to cloudsmith. The token is valid for up to 2 hours.
-
-  The environment variables CLOUDSMITH_SERVICE_ACCOUNT and CLOUDSMITH_OIDC_TOKEN are set.
+  OIDC token for use in subsequent requests to cloudsmith. The token is valid for up to 2 hours. On completion the 
+  environment variables CLOUDSMITH_SERVICE_ACCOUNT and CLOUDSMITH_OIDC_TOKEN are set.
 parameters:
   service_account:
     description: The identity/slug of the Cloudsmith service account to use when authenticating
