@@ -167,6 +167,8 @@ workflows:
       - test-upload_python_package:
           context: circleci-orb-publishing
           filters: *filters
+          requires:
+            - test-twine-upload_package
       # The orb must be re-packed for publishing, and saved to the workspace.
       - orb-tools/pack:
           filters: *release-filters
