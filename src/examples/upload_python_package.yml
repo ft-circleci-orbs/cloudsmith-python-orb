@@ -12,7 +12,7 @@ usage:
         - checkout
         - run: python -m ensurepip --upgrade
         - run:
-            name: Prepare source and wheel distributions
+            name: Build source and wheel distributions
             command: |
               python -m pip install build --upgrade --user
               python -m build
