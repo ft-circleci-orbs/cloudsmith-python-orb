@@ -12,16 +12,27 @@ parameters:
     type: string
     default: None
   wheel:
-    description: The location of the wheel (.whl) file to upload
+    description: The path of the wheel (.whl) file to upload
     type: string
     default: None
 steps:
+  - unless:
+      condition:
+        or:
+          - <<parameters.wheel>>
+          - <<parameters.source_dist>>
+      steps:
+        run:
+          name: "Fail when neither source_dist or wheel are supplied."
+          command: |
+            echo "Please specify source_dist and/or wheel paths."
+            exit 1
+
   - run:
       name: Cloudsmith - Install CLI
       command: |
         python -m ensurepip --upgrade
 
-        echo ""
         echo "Installing cloudsmith-cli using pip ..."
 
         python -m pip install cloudsmith-cli --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
@@ -33,14 +44,11 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - when:
-      condition:
-        not:
-          equal: [ "", "<<parameters.source_dist>>"]
+      condition: <<parameters.source_dist>>
       steps:
         - run:
             name: Cloudsmith - Upload source distribution
             command: |
-              echo ""
               echo "Uploading source distribution <<parameters.source_dist>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
@@ -48,14 +56,11 @@ steps:
               echo ""
               echo "Package upload and synchronisation completed OK."
   - when:
-      condition:
-        not:
-          equal: [ "", "<<parameters.wheel>>"]
+      condition: <<parameters.wheel>>
       steps:
         - run:
             name: Cloudsmith - Upload wheel distribution
             command: |
-              echo ""
               echo "Uploading wheel <<parameters.wheel>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
