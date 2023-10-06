@@ -20,8 +20,5 @@ steps:
         echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
         echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
   - run:
-      name: Cloudsmith - Set CLOUDSMITH_PIP_INDEX_URL environment variable
-      command: <<include(scripts/set_env_vars_for_pip.sh)>>
-  - run:
       name: Cloudsmith - Set CLOUDSMITH_TWINE environment variables
       command: <<include(scripts/set_env_vars_for_twine.sh)>>

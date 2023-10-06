@@ -110,14 +110,14 @@ jobs:
           name: Prepare distribution
           command: python setup.py sdist
           working_directory: .circleci/simplepkg-py
-      - cloudsmith-circleci/set_env_vars_for_twine:
-          repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run:
           name: Install twine
           command: |
             python -m ensurepip --upgrade
-            python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+            python -m pip install twine"
+      - cloudsmith-circleci/set_env_vars_for_twine:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
       - run:
           name: Publish Python package to Cloudsmith
           command: |
