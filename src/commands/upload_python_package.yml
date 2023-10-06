@@ -42,9 +42,9 @@ steps:
             command: |
               echo ""
               echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-      
+
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
-      
+
               echo ""
               echo "Package upload and synchronisation completed OK."
   - when:
@@ -57,8 +57,8 @@ steps:
             command: |
               echo ""
               echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-      
+
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
-      
+
               echo ""
               echo "Package upload and synchronisation completed OK."
