@@ -21,7 +21,7 @@ usage:
             repository: "your-repository-id"
             service_account: "your-service-account-id"
         - run:
-            name: Publish distributions to Cloudsmith
+            name: Publish source and wheel distributions to Cloudsmith
             command: |
               twine upload \
                   --username $CLOUDSMITH_TWINE_USERNAME \
