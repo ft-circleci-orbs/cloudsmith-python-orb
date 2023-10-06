@@ -1,5 +1,5 @@
 description:
-  Upload a python package to a Cloudsmith repository using the Cloudsmith CLI
+  Upload a python package to a Cloudsmith repository using the Cloudsmith CLI.
 parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
@@ -8,7 +8,7 @@ parameters:
     description: The identity/slug of the Cloudsmith service account to use when authenticating
     type: string
   package_path:
-    description: The location of the package files to upload
+    description: The location of the package file to upload
     type: string
 steps:
   - run:
