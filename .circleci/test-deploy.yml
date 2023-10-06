@@ -101,6 +101,32 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-twine-upload_package:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Prepare distribution
+          command: python setup.py sdist
+          working_directory: .circleci/simplepkg-py
+      - run:
+          name: Install twine
+          command: |
+            python -m ensurepip --upgrade
+            python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+      - ft-cloudsmith/set_env_vars_for_twine:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run:
+          name: Publish Python package to Cloudsmith
+          command: |
+            twine upload \
+                --username $CLOUDSMITH_TWINE_USERNAME \
+                --password $CLOUDSMITH_TWINE_PASSWORD \
+                --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
+                dist/*
+
   test-upload_python_package:
     docker:
       - image: cimg/python:3.9
@@ -115,6 +141,8 @@ jobs:
           service_account: "circleci-orb-testing"
           package_path: .circleci/simplepkg-py/dist/simplepkg-0.0.1.tar.gz
 
+
+
 workflows:
   test-deploy:
     jobs:
@@ -127,6 +155,9 @@ workflows:
           context: circleci-orb-publishing
           filters: *filters
       - test-set_env_vars_for_twine:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-twine-upload_package:
           context: circleci-orb-publishing
           filters: *filters
       - test-upload_python_package:
@@ -146,6 +177,7 @@ workflows:
             - test-set_env_vars_for_pip
             - test-set_env_vars_for_twine
             - test-upload_python_package
+            - test-twine-upload_package
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
