@@ -151,7 +151,7 @@ jobs:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
 #          source_dist: .circleci/simplepkg-py/dist/simplepkg-0.0.1.tar.gz
-          wheel: .circleci/simplepkg-py/dist/simplepkg-0.0.1-py3-none-any.whl
+#          wheel: .circleci/simplepkg-py/dist/simplepkg-0.0.1-py3-none-any.whl
 
 workflows:
   test-deploy:
