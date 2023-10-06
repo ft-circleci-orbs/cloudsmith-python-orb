@@ -41,7 +41,7 @@ steps:
             name: Cloudsmith - Upload source distribution
             command: |
               echo ""
-              echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+              echo "Uploading source distribution <<parameters.source_dist>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
 
@@ -56,7 +56,7 @@ steps:
             name: Cloudsmith - Upload wheel distribution
             command: |
               echo ""
-              echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+              echo "Uploading wheel <<parameters.wheel>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
               cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
 
