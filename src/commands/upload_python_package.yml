@@ -37,14 +37,14 @@ steps:
             name: Cloudsmith - Install CLI
             command: |
               python -m ensurepip --upgrade
-      
+
               echo "Installing cloudsmith-cli using pip ..."
-      
+
               python -m pip install cloudsmith-cli --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
-      
+
               echo ""
               echo "Cloudsmith CLI installed OK."
-      
+
               cloudsmith --version
         - authenticate_with_oidc:
             service_account: <<parameters.service_account>>
@@ -55,9 +55,9 @@ steps:
                   name: Cloudsmith - Upload source distribution
                   command: |
                     echo "Uploading source distribution <<parameters.source_dist>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-      
+
                     cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
-      
+
                     echo ""
                     echo "Package upload and synchronisation completed OK."
         - when:
@@ -67,8 +67,8 @@ steps:
                   name: Cloudsmith - Upload wheel distribution
                   command: |
                     echo "Uploading wheel <<parameters.wheel>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-      
+
                     cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
-      
+
                     echo ""
                     echo "Package upload and synchronisation completed OK."
