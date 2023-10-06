@@ -11,14 +11,14 @@ usage:
       steps:
         - checkout
         - run: python setup.py sdist
+        - ft-cloudsmith/set_env_vars_for_twine:
+            repository: "your-repository-id"
+            service_account: "your-service-account-id"
         - run:
             name: Install twine
             command: |
               python -m ensurepip --upgrade
               python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"
-        - ft-cloudsmith/set_env_vars_for_twine:
-            repository: "your-repository-id"
-            service_account: "your-service-account-id"
         - run:
             name: Publish Python package to Cloudsmith
             command: |
