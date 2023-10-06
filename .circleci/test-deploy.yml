@@ -73,6 +73,19 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-upload_python_package:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Prepare distribution
+          command: python setup.py sdist
+          working_directory: .circleci/simplepkg-py
+      - cloudsmith-circleci/upload_python_package:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+          package_path: .circleci/simplepkg-py/dist/simplepkg-0.0.1.tar.gz
 
 workflows:
   test-deploy:
@@ -83,6 +96,9 @@ workflows:
           context: circleci-orb-publishing
           filters: *filters
       - test-set_env_vars_for_pip:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-upload_python_package:
           context: circleci-orb-publishing
           filters: *filters
       # The orb must be re-packed for publishing, and saved to the workspace.
@@ -97,6 +113,7 @@ workflows:
             - orb-tools/pack
             - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
+            - test-upload_python_package
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters

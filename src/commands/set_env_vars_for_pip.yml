@@ -11,13 +11,13 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - run:
-      name: Configure Cloudsmith domains
+      name: Cloudsmith - Configure domains
       command: <<include(scripts/configure_cloudsmith_domains.sh)>>
   - run:
-      name: Configure Cloudsmith repository
+      name: Cloudsmith - Configure repository
       command: |
         echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
         echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
   - run:
-      name: Set environment variables for pip
+      name: Cloudsmith - Set CLOUDSMITH_PIP_INDEX_URL environment variable
       command: <<include(scripts/set_env_vars_for_pip.sh)>>

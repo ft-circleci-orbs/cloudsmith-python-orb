@@ -1,0 +1,39 @@
+description:
+  Upload a python package to a Cloudsmith repository using the Cloudsmith CLI
+parameters:
+  repository:
+    description: The identity/slug of the Cloudsmith repository
+    type: string
+  service_account:
+    description: The identity/slug of the Cloudsmith service account to use when authenticating
+    type: string
+  package_path:
+    description: The location of the package files to upload
+    type: string
+steps:
+  - run:
+      name: Cloudsmith - Install CLI
+      command: |
+        python -m ensurepip --upgrade
+
+        echo ""
+        echo "Installing cloudsmith-cli using pip ..."
+
+        python -m pip install cloudsmith-cli==1.1.1 --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+
+        echo ""
+        echo "Cloudsmith CLI installed OK."
+
+        cloudsmith --version
+  - authenticate_with_oidc:
+      service_account: <<parameters.service_account>>
+  - run:
+      name: Cloudsmith - Upload package
+      command: |
+        echo ""
+        echo "Uploading package <<parameters.package_path>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+
+        cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.package_path>>"
+
+        echo ""
+        echo "Package upload and synchronisation completed OK."
