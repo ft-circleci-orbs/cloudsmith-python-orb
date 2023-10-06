@@ -19,7 +19,7 @@ steps:
         echo ""
         echo "Installing cloudsmith-cli using pip ..."
 
-        python -m pip install cloudsmith-cli==1.1.1 --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+        python -m pip install cloudsmith-cli --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
 
         echo ""
         echo "Cloudsmith CLI installed OK."
