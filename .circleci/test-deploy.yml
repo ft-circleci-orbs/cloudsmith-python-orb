@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Assert environment variables have been set
           command: | 
-            if [ $CLOUDSMITH_TWINE_REPOSITORY_URL != "https://python.cloudsmith.io/financial-times/circleci-orb-testing" ]
+            if [ $CLOUDSMITH_TWINE_REPOSITORY_URL != "https://python.cloudsmith.io/financial-times/circleci-orb-testing/" ]
             then
               echo "Test failed: CLOUDSMITH_TWINE_REPOSITORY_URL has not been set correctly."
               exit 1
