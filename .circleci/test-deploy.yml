@@ -108,12 +108,12 @@ jobs:
     docker:
       - image: cimg/python:3.9
     resource_class: small
-    working_directory: .circleci/simplepkg-py
     steps:
       - checkout
       - run:
           name: Prepare distribution
           command: python setup.py sdist
+          working_directory: .circleci/simplepkg-py
       - run:
           name: Install twine
           command: |
@@ -130,21 +130,23 @@ jobs:
                 --password $CLOUDSMITH_TWINE_PASSWORD \
                 --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
                 dist/simplepkg-0.0.1.tar.gz
+          working_directory: .circleci/simplepkg-py
 
   test-upload_python_package:
     docker:
       - image: cimg/python:3.9
     resource_class: small
-    working_directory: .circleci/simplepkg-py
     steps:
       - checkout
       - run:
           name: Prepare distribution
           command: python setup.py sdist
+          working_directory: .circleci/simplepkg-py
       - cloudsmith-circleci/upload_python_package:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
           package_path: dist/simplepkg-0.0.1.tar.gz
+          working_directory: .circleci/simplepkg-py
 
 workflows:
   test-deploy:
