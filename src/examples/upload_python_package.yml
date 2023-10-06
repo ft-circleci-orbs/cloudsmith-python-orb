@@ -10,7 +10,13 @@ usage:
         - image: cimg/python:3.9
       steps:
         - checkout
-        - run: python setup.py bdist_wheel --universal
+        - run:
+            name: Prepare source and wheel distributions
+            command: |
+              python -m ensurepip --upgrade
+              python -m pip install build --upgrade --user
+              python -m build
+        - run: python -m pip install twine --upgrade --user
         - ft-cloudsmith/upload_python_package:
             repository: "your-repository-id"
             service_account: "your-service-account"

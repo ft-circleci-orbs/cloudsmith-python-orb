@@ -111,19 +111,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Prepare distribution
-          command: python setup.py sdist
+          name: Prepare package distribution
+          command: |
+            python -m ensurepip --upgrade
+            python -m pip install build --upgrade --user
+            python -m build
           working_directory: .circleci/simplepkg-py
       - run:
           name: Install twine
           command: |
-            python -m ensurepip --upgrade
             python -m pip install twine --upgrade --user
       - cloudsmith-circleci/set_env_vars_for_twine:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
       - run:
-          name: Publish Python package to Cloudsmith
+          name: twine upload package to Cloudsmith
           command: |
             twine upload \
                 --username $CLOUDSMITH_TWINE_USERNAME \
@@ -139,8 +141,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Prepare distribution
-          command: python setup.py sdist
+          name: Prepare package distribution
+          command: |
+            python -m ensurepip --upgrade
+            python -m pip install build --upgrade --user
+            python -m build
           working_directory: .circleci/simplepkg-py
       - cloudsmith-circleci/upload_python_package:
           repository: "circleci-orb-testing"

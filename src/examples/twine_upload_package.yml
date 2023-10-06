@@ -10,12 +10,13 @@ usage:
         - image: cimg/python:3.9
       steps:
         - checkout
-        - run: python setup.py sdist
         - run:
-            name: Install twine
+            name: Prepare source and wheel distributions
             command: |
               python -m ensurepip --upgrade
-              python -m pip install twine --upgrade --user
+              python -m pip install build --upgrade --user
+              python -m build
+        - run: python -m pip install twine --upgrade --user
         - ft-cloudsmith/set_env_vars_for_twine:
             repository: "your-repository-id"
             service_account: "your-service-account-id"
