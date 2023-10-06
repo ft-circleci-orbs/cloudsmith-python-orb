@@ -2,3 +2,6 @@
 orb.yml
 .DS_Store
 .idea
+
+.circleci/simplepkg-py/dist
+.circleci/simplepkg-py/simplepkg.egg-info
