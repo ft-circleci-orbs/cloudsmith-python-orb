@@ -10,11 +10,11 @@ parameters:
   source_dist:
     description: The path of the source distribution file to upload
     type: string
-    default: None
+    default: ""
   wheel:
     description: The path of the wheel (.whl) file to upload
     type: string
-    default: None
+    default: ""
 steps:
   - unless:
       condition:
