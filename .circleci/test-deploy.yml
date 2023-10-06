@@ -115,7 +115,7 @@ jobs:
           command: |
             python -m ensurepip --upgrade
             python -m pip install twine --index-url "$CLOUDSMITH_PIP_INDEX_URL"
-      - ft-cloudsmith/set_env_vars_for_twine:
+      - cloudsmith-circleci/set_env_vars_for_twine:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
       - run:
