@@ -15,7 +15,7 @@ usage:
             name: Install twine
             command: |
               python -m ensurepip --upgrade
-              python -m pip install twine"
+              python -m pip install twine --upgrade --user
         - ft-cloudsmith/set_env_vars_for_twine:
             repository: "your-repository-id"
             service_account: "your-service-account-id"
