@@ -1,5 +1,5 @@
 description:
-  Generate temporary Cloudsmith credentials using OIDC and upload a python package to a Cloudsmith repository using the 
+  Generate temporary Cloudsmith credentials using OIDC and upload a python package to a Cloudsmith repository using the
   Cloudsmith CLI.
 parameters:
   repository:

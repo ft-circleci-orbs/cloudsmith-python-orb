@@ -1,6 +1,6 @@
 description:
-  Generate temporary Cloudsmith credentials using OIDC and construct a pip index URL string for a specific Cloudsmith 
-  repository and service account. On completion the command sets the CLOUDSMITH_PIP_INDEX_URL environment variable for 
+  Generate temporary Cloudsmith credentials using OIDC and construct a pip index URL string for a specific Cloudsmith
+  repository and service account. On completion the command sets the CLOUDSMITH_PIP_INDEX_URL environment variable for
   use with pip. The index url includes Cloudsmith authentication credentials generated using OIDC.
 parameters:
   repository:

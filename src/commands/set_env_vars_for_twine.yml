@@ -1,6 +1,6 @@
 description:
-  Generate temporary Cloudsmith credentials using OIDC and construct a repository URL for a specific Cloudsmith 
-  repository and service account. On completion the command sets the CLOUDSMITH_TWINE_REPOSITORY_URL, 
+  Generate temporary Cloudsmith credentials using OIDC and construct a repository URL for a specific Cloudsmith
+  repository and service account. On completion the command sets the CLOUDSMITH_TWINE_REPOSITORY_URL,
   CLOUDSMITH_TWINE_USERNAME and CLOUDSMITH_TWINE_PASSWORD environment variables for use with twine.
 parameters:
   repository:
