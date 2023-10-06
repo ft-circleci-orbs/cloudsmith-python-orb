@@ -126,6 +126,7 @@ jobs:
                 --password $CLOUDSMITH_TWINE_PASSWORD \
                 --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
                 dist/*
+          working_directory: .circleci/simplepkg-py
 
   test-upload_python_package:
     docker:
