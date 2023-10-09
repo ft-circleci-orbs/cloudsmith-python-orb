@@ -39,7 +39,7 @@ steps:
         fi
   - run:
       name: Cloudsmith - Upload source distribution(s)
-      command:
+      command: |
         for f in "<<parameters.dist_dir>>/*.tar.gz"
         do
           echo "Uploading source distribution $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
