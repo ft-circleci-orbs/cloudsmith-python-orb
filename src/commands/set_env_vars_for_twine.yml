@@ -1,7 +1,7 @@
 description:
-  Generate temporary Cloudsmith credentials using OIDC and construct a pip index URL string for a specific Cloudsmith
-  repository and service account. On completion the command sets the CLOUDSMITH_PIP_INDEX_URL environment variable for
-  use with pip. The index url includes Cloudsmith authentication credentials generated using OIDC.
+  Generate temporary Cloudsmith credentials using OIDC and construct a repository URL for a specific Cloudsmith
+  repository and service account. On completion the command sets the CLOUDSMITH_TWINE_REPOSITORY_URL,
+  CLOUDSMITH_TWINE_USERNAME and CLOUDSMITH_TWINE_PASSWORD environment variables for use with twine.
 parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
@@ -21,5 +21,5 @@ steps:
         echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
         echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
   - run:
-      name: Cloudsmith - Set CLOUDSMITH_PIP_INDEX_URL environment variable
-      command: <<include(scripts/set_env_vars_for_pip.sh)>>
+      name: Cloudsmith - Set CLOUDSMITH_TWINE environment variables
+      command: <<include(scripts/set_env_vars_for_twine.sh)>>
