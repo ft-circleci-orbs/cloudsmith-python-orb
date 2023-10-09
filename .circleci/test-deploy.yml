@@ -150,6 +150,7 @@ jobs:
       - cloudsmith-circleci/upload_python_package:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
+          dist_dir: ./circleci/simplepkg-py/dist
 
 workflows:
   test-deploy:
