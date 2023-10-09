@@ -29,10 +29,10 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - run:
-      name: Cloudsmith - Check dist_dir is valid
+      name: Cloudsmith - Check dist_dir exists
       command: |
         if [ -d "<<parameters.dist_dir>>" ]; then
-          echo "<<parameters.dist_dir>> is a directory"
+          echo "<<parameters.dist_dir>> is a valid directory"
         else
           echo "<<parameters.dist_dir>> is not a directory"
           exit 1
@@ -40,11 +40,13 @@ steps:
   - run:
       name: Cloudsmith - Upload source distribution(s)
       command: |
-        for f in <<parameters.dist_dir>>/*.tar.gz
+        for filename in <<parameters.dist_dir>>/*.tar.gz
         do
-          echo "Uploading source distribution $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+          [ -f "$filename" ] || continue
 
-          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$f"
+          echo "Uploading source distribution $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+
+          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
 
           echo ""
           echo "Package upload and synchronisation completed OK."
@@ -52,11 +54,13 @@ steps:
   - run:
       name: Cloudsmith - Upload wheel distribution(s)
       command: |
-        for f in <<parameters.dist_dir>>/*.whl
+        for filename in <<parameters.dist_dir>>/*.whl
         do
-          echo "Uploading wheel $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+          [ -f "$filename" ] || continue
 
-          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$f"
+          echo "Uploading wheel $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+
+          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
 
           echo ""
           echo "Package upload and synchronisation completed OK."
