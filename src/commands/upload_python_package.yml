@@ -29,39 +29,13 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - run:
-      name: Cloudsmith - Check dist_dir exists
+      name: Cloudsmith - Configure repository and dist_dir
       command: |
-        if [ -d "<<parameters.dist_dir>>" ]; then
-          echo "<<parameters.dist_dir>> is a valid directory"
-        else
-          echo "<<parameters.dist_dir>> is not a directory"
-          exit 1
-        fi
+        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
+        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
+
+        echo "export DIST_DIR=\"<<parameters.dist_dir>>\"" >> $BASH_ENV
+        echo "DIST_DIR=<<parameters.dist_dir>>"
   - run:
-      name: Cloudsmith - Upload source distribution(s)
-      command: |
-        for filename in <<parameters.dist_dir>>/*.tar.gz
-        do
-          [ -f "$filename" ] || continue
-
-          echo "Uploading source distribution $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-
-          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
-
-          echo ""
-          echo "Package upload and synchronisation completed OK."
-        done
-  - run:
-      name: Cloudsmith - Upload wheel distribution(s)
-      command: |
-        for filename in <<parameters.dist_dir>>/*.whl
-        do
-          [ -f "$filename" ] || continue
-
-          echo "Uploading wheel $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-
-          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
-
-          echo ""
-          echo "Package upload and synchronisation completed OK."
-        done
+      name: Cloudsmith - Upload python package file(s)
+      command: <<include(scripts/upload_python_package.sh)>>
