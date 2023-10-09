@@ -7,17 +7,11 @@ parameters:
     description: The identity/slug of the Cloudsmith service account to use when authenticating
     type: string
 steps:
-#  - run:
-#      name: Cloudsmith - Configure organisation and service account
-#      command: |
-#        if [ -z "$CLOUDSMITH_ORGANISATION" ]
-#        then
-#          echo "export CLOUDSMITH_ORGANISATION=\"financial-times\"" >> "$BASH_ENV"
-#        fi
-#        echo "export CLOUDSMITH_SERVICE_ACCOUNT=\"<<parameters.service_account>>\"" >> "$BASH_ENV"
   - run:
-      name: Cloudsmith - Authenticate with OIDC
-      command: | 
+      name: Cloudsmith - Configure organisation and service account
+      command: |
         CLOUDSMITH_ORGANISATION=financial-times
         CLOUDSMITH_SERVICE_ACCOUNT=<<parameters.service_account>>
-        <<include(scripts/authenticate_with_oidc.sh)>>
+  - run:
+      name: Cloudsmith - Authenticate with OIDC
+      command: <<include(scripts/authenticate_with_oidc.sh)>>
