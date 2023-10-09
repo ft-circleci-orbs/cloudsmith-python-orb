@@ -23,6 +23,12 @@ else
   exit 1
 fi
 
+if [ -z "$(ls -A $DIST_DIR/*.tar.gz)" ] && [ -z "$(ls -A $DIST_DIR/*.whl)" ]
+then
+  echo "$DIST_DIR does not contain any tar.gz or whl files to upload."
+  exit 1
+fi
+
 # Upload source distribution if present
 for filename in "$DIST_DIR"/*.tar.gz
 do
