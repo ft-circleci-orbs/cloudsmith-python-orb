@@ -23,7 +23,11 @@ else
   exit 1
 fi
 
-if [ -z "$(ls -A ${DIST_DIR}/*.tar.gz)" ] && [ -z "$(ls -A ${DIST_DIR}/*.whl)" ]
+# Check there are tar.gz or whl files to upload
+LS_TAR_GZ_CMD="ls -A ${DIST_DIR}/*.tar.gz"
+LS_WHL_CMD="ls -A ${DIST_DIR}/*.whl"
+
+if [ -z "$($LS_TAR_GZ_CMD)" ] && [ -z "$($LS_WHL_CMD)" ]
 then
   echo "$DIST_DIR does not contain any tar.gz or whl files to upload."
   exit 1
