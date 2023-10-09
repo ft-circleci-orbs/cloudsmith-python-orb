@@ -3,6 +3,13 @@
 # shellcheck disable=SC2016
 # shellcheck disable=SC2129
 
+if [ -z "$CLOUDSMITH_REPOSITORY" ]
+then
+  echo "Unable to upload package. Env var CLOUDSMITH_REPOSITORY is not defined."
+  exit 1
+fi
+
+
 if [ -d "$DIST_DIR" ]; then
   echo "$DIST_DIR is a valid directory."
 else
@@ -14,9 +21,9 @@ for filename in "$DIST_DIR"/*.tar.gz
 do
   [ -f "$filename" ] || continue
 
-  echo "Uploading source distribution $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+  echo "Uploading source distribution $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/$CLOUDSMITH_REPOSITORY ..."
 
-  cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
+  cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/$CLOUDSMITH_REPOSITORY" "$filename"
 
   echo ""
   echo "Package upload and synchronisation completed OK."
@@ -26,9 +33,9 @@ for filename in "$DIST_DIR"/*.whl
 do
   [ -f "$filename" ] || continue
 
-  echo "Uploading wheel $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+  echo "Uploading wheel $filename to Cloudsmith repository $CLOUDSMITH_ORGANISATION/$CLOUDSMITH_REPOSITORY ..."
 
-  cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$filename"
+  cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/$CLOUDSMITH_REPOSITORY" "$filename"
 
   echo ""
   echo "Package upload and synchronisation completed OK."

@@ -29,8 +29,11 @@ steps:
   - authenticate_with_oidc:
       service_account: <<parameters.service_account>>
   - run:
-      name: Cloudsmith - Configure DIST_DIR
+      name: Cloudsmith - Configure repository and dist_dir
       command: |
+        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
+        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
+
         echo "export DIST_DIR=\"<<parameters.dist_dir>>\"" >> $BASH_ENV
         echo "DIST_DIR=<<parameters.dist_dir>>"
   - run:
