@@ -55,9 +55,9 @@ steps:
         for f in "<<parameters.dist_dir>>/*.whl"
         do
           echo "Uploading wheel $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-          
+
           cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$f"
-          
+
           echo ""
           echo "Package upload and synchronisation completed OK."
         done
