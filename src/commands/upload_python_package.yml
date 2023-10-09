@@ -8,68 +8,56 @@ parameters:
   service_account:
     description: The identity/slug of the Cloudsmith service account to use when authenticating
     type: string
-  source_dist:
-    description: The path of the source distribution file to upload
+  dist_dir:
+    description: The distribution directory where package source distribution and wheel files are located
     type: string
-    default: ""
-  wheel:
-    description: The path of the wheel (.whl) file to upload
-    type: string
-    default: ""
+    default: "dist"
 steps:
-  - unless:
-      condition:
-        or:
-          - <<parameters.wheel>>
-          - <<parameters.source_dist>>
-      steps:
-        run:
-          name: "Fail when neither source_dist or wheel are supplied."
-          command: |
-            echo "Please specify a source_dist path and/or a wheel path."
-            exit 1
-  - when:
-      condition:
-        or:
-          - <<parameters.wheel>>
-          - <<parameters.source_dist>>
-      steps:
-        - run:
-            name: Cloudsmith - Install CLI
-            command: |
-              python -m ensurepip --upgrade
+  - run:
+      name: Cloudsmith - Install CLI
+      command: |
+        python -m ensurepip --upgrade
 
-              echo "Installing cloudsmith-cli using pip ..."
+        echo "Installing cloudsmith-cli using pip ..."
 
-              python -m pip install cloudsmith-cli --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
+        python -m pip install cloudsmith-cli --upgrade --user --extra-index-url=https://dl.cloudsmith.io/public/cloudsmith/cli/python/index/
 
-              echo ""
-              echo "Cloudsmith CLI installed OK."
+        echo ""
+        echo "Cloudsmith CLI installed OK."
 
-              cloudsmith --version
-        - authenticate_with_oidc:
-            service_account: <<parameters.service_account>>
-        - when:
-            condition: <<parameters.source_dist>>
-            steps:
-              - run:
-                  name: Cloudsmith - Upload source distribution
-                  command: |
-                    echo "Uploading source distribution <<parameters.source_dist>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+        cloudsmith --version
+  - authenticate_with_oidc:
+      service_account: <<parameters.service_account>>
+  - run:
+      name: Cloudsmith - Check dist_dir is valid
+      command: |
+        if [ -d "<<parameters.dist_dir>>" ]; then
+          echo "<<parameters.dist_dir>> is a directory"
+        else
+          echo "<<parameters.dist_dir>> is not a directory"
+          exit 1
+        fi
+  - run:
+      name: Cloudsmith - Upload source distribution(s)
+      command:
+        for f in "<<parameters.dist_dir>>/*.tar.gz"
+        do
+          echo "Uploading source distribution $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
-                    cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.source_dist>>"
+          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$f"
 
-                    echo ""
-                    echo "Package upload and synchronisation completed OK."
-        - when:
-            condition: <<parameters.wheel>>
-            steps:
-              - run:
-                  name: Cloudsmith - Upload wheel distribution
-                  command: |
-                    echo "Uploading wheel <<parameters.wheel>> to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
-
-                    cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "<<parameters.wheel>>"
-
-                    echo ""
-                    echo "Package upload and synchronisation completed OK."
+          echo ""
+          echo "Package upload and synchronisation completed OK."
+        done
+  - run:
+      name: Cloudsmith - Upload wheel distribution(s)
+      command: |
+        for f in "<<parameters.dist_dir>>/*.whl"
+        do
+          echo "Uploading wheel $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
+          
+          cloudsmith push python --verbose --api-key "$CLOUDSMITH_OIDC_TOKEN" "$CLOUDSMITH_ORGANISATION/<<parameters.repository>>" "$f"
+          
+          echo ""
+          echo "Package upload and synchronisation completed OK."
+        done

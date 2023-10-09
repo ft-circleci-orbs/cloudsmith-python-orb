@@ -19,8 +19,6 @@ usage:
         - ft-cloudsmith/upload_python_package:
             repository: "your-repository-id"
             service_account: "your-service-account"
-            source_dist: dist/your-package-0.0.1.tar.gz
-            wheel: dist/your-package-0.0.1-py3-none-any.whl
   workflows:
     main:
       jobs:
