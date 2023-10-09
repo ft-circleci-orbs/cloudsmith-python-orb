@@ -1,5 +1,5 @@
 description: >
-  Pip install requirements from Cloudsmith.
+  Install requirements from Cloudsmith using pip.
 usage:
   version: 2.1
   orbs:
@@ -10,6 +10,7 @@ usage:
         - image: cimg/python:3.9
       steps:
         - checkout
+        - run: python -m ensurepip --upgrade
         - ft-cloudsmith/set_env_vars_for_pip:
             repository: "your-repository-id"
             service_account: "your-service-account-id"
