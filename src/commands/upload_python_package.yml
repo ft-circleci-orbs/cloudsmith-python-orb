@@ -40,7 +40,7 @@ steps:
   - run:
       name: Cloudsmith - Upload source distribution(s)
       command: |
-        for f in "<<parameters.dist_dir>>/*.tar.gz"
+        for f in <<parameters.dist_dir>>/*.tar.gz
         do
           echo "Uploading source distribution $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
@@ -52,7 +52,7 @@ steps:
   - run:
       name: Cloudsmith - Upload wheel distribution(s)
       command: |
-        for f in "<<parameters.dist_dir>>/*.whl"
+        for f in <<parameters.dist_dir>>/*.whl
         do
           echo "Uploading wheel $f to Cloudsmith repository $CLOUDSMITH_ORGANISATION/<<parameters.repository>> ..."
 
