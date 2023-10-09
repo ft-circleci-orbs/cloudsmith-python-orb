@@ -75,6 +75,39 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-pip_install_package_example:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - cloudsmith-circleci/set_env_vars_for_pip:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run: python -m pip install simplepkg==0.0.1 --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+
+  test-pip_install_requirements_example:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run: echo "simplepkg==0.0.1" > requirements.txt
+      - cloudsmith-circleci/set_env_vars_for_pip:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
+
+  test-configure_pip_example:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run: echo "simplepkg==0.0.1" > requirements.txt
+      - cloudsmith-circleci/set_env_vars_for_pip:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
+      - run: python -m pip install -r requirements.txt
+
   test-set_env_vars_for_twine:
     docker:
       - image: cimg/python:3.9
@@ -163,6 +196,15 @@ workflows:
       - test-set_env_vars_for_pip:
           context: circleci-orb-publishing
           filters: *filters
+      - test-pip_install_package_example:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-pip_install_requirements_example:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-configure_pip_example:
+          context: circleci-orb-publishing
+          filters: *filters
       - test-set_env_vars_for_twine:
           context: circleci-orb-publishing
           filters: *filters
@@ -186,6 +228,9 @@ workflows:
             - orb-tools/pack
             - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
+            - test-pip_install_package_example
+            - test-pip_install_requirements_example
+            - test-configure_pip_example
             - test-set_env_vars_for_twine
             - test-upload_package_using_twine
             - test-upload_package_using_cli
