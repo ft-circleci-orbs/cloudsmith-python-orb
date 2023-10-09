@@ -26,6 +26,7 @@ jobs:
   test-authenticate_with_oidc:
     docker:
       - image: cimg/base:current
+    resource_class: small
     steps:
       - checkout
       - cloudsmith-circleci/authenticate_with_oidc:
@@ -53,6 +54,7 @@ jobs:
   test-set_env_vars_for_pip:
     docker:
       - image: cimg/python:3.9
+    resource_class: small
     steps:
       - checkout
       - cloudsmith-circleci/set_env_vars_for_pip:
@@ -73,19 +75,82 @@ jobs:
             fi
             echo "All tests passed."
 
-  test-upload_python_package:
+  test-set_env_vars_for_twine:
     docker:
       - image: cimg/python:3.9
+    resource_class: small
     steps:
       - checkout
+      - cloudsmith-circleci/set_env_vars_for_twine:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
       - run:
-          name: Prepare distribution
-          command: python setup.py sdist
+          name: Assert environment variables have been set
+          command: | 
+            if [ $CLOUDSMITH_TWINE_REPOSITORY_URL != "https://python.cloudsmith.io/financial-times/circleci-orb-testing/" ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_REPOSITORY_URL has not been set correctly."
+              exit 1
+            fi
+            if [ $CLOUDSMITH_TWINE_USERNAME != "circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_USERNAME has not been set correctly."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_TWINE_PASSWORD ]
+            then
+              echo "Test failed: CLOUDSMITH_TWINE_PASSWORD has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
+  test-upload_package_using_twine:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - run: python -m ensurepip --upgrade
+      - run:
+          name: Build source and wheel distributions
+          command: |
+            python -m pip install build --upgrade --user
+            python -m build
+          working_directory: .circleci/simplepkg-py
+      - run:
+          name: Install twine
+          command: |
+            python -m pip install twine --upgrade --user
+      - cloudsmith-circleci/set_env_vars_for_twine:
+          repository: "circleci-orb-testing"
+          service_account: "circleci-orb-testing"
+      - run:
+          name: twine upload package to Cloudsmith
+          command: |
+            twine upload \
+                --username $CLOUDSMITH_TWINE_USERNAME \
+                --password $CLOUDSMITH_TWINE_PASSWORD \
+                --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
+                dist/*
+          working_directory: .circleci/simplepkg-py
+
+  test-upload_package_using_cli:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - run: python -m ensurepip --upgrade
+      - run:
+          name: Build source and wheel distributions
+          command: |
+            python -m pip install build --upgrade --user
+            python -m build
           working_directory: .circleci/simplepkg-py
       - cloudsmith-circleci/upload_python_package:
           repository: "circleci-orb-testing"
           service_account: "circleci-orb-testing"
-          package_path: .circleci/simplepkg-py/dist/simplepkg-0.0.1.tar.gz
+          dist_dir: .circleci/simplepkg-py/dist
 
 workflows:
   test-deploy:
@@ -98,9 +163,17 @@ workflows:
       - test-set_env_vars_for_pip:
           context: circleci-orb-publishing
           filters: *filters
-      - test-upload_python_package:
+      - test-set_env_vars_for_twine:
           context: circleci-orb-publishing
           filters: *filters
+      - test-upload_package_using_twine:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-upload_package_using_cli:
+          context: circleci-orb-publishing
+          filters: *filters
+          requires:
+            - test-upload_package_using_twine
       # The orb must be re-packed for publishing, and saved to the workspace.
       - orb-tools/pack:
           filters: *release-filters
@@ -113,7 +186,9 @@ workflows:
             - orb-tools/pack
             - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
-            - test-upload_python_package
+            - test-set_env_vars_for_twine
+            - test-upload_package_using_twine
+            - test-upload_package_using_cli
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
