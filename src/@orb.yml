@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.0.0
+
 description: >
   Install packages from and publish packages to Cloudsmith using short-lived OIDC credentials
 display:
