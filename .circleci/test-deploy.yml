@@ -59,7 +59,6 @@ jobs:
       - checkout
       - cloudsmith-circleci/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run:
           name: Assert environment variables have been set
           command: | 
@@ -82,7 +81,6 @@ jobs:
       - checkout
       - cloudsmith-circleci/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run: python -m pip install simplepkg==0.0.1 --index-url "$CLOUDSMITH_PIP_INDEX_URL"
 
   test-pip_install_requirements_example:
@@ -93,7 +91,6 @@ jobs:
       - run: echo "simplepkg==0.0.1" > requirements.txt
       - cloudsmith-circleci/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run: python -m pip install -r requirements.txt --index-url "$CLOUDSMITH_PIP_INDEX_URL"
 
   test-configure_pip_example:
@@ -104,7 +101,6 @@ jobs:
       - run: echo "simplepkg==0.0.1" > requirements.txt
       - cloudsmith-circleci/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
       - run: python -m pip install -r requirements.txt
 
@@ -116,7 +112,6 @@ jobs:
       - checkout
       - cloudsmith-circleci/set_env_vars_for_twine:
           repository: "circleci-orb-testing"
-          service_account: "circleci-orb-testing"
       - run:
           name: Assert environment variables have been set
           command: | 

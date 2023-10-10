@@ -6,17 +6,10 @@ parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
     type: string
-  service_account:
-    description: The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
-    type: string
 steps:
   - run:
       name: Cloudsmith - Configure defaults
       command: <<include(scripts/configure_cloudsmith_defaults.sh)>>
-  - run:
-      name: Cloudsmith - Set env vars for OIDC
-      command: |
-        echo "export CLOUDSMITH_SERVICE_ACCOUNT=\"<<parameters.service_account>>\"" >> $BASH_ENV
   - cloudsmith-oidc/authenticate_with_oidc
   - run:
       name: Cloudsmith - Configure repository
