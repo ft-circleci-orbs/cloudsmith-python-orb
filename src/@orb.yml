@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.0.0
 
-description: >
+description: |
   Install packages from and publish packages to Cloudsmith using short-lived OIDC credentials.
   Note, all commands require the following environment variables to be set:
    - CLOUDSMITH_ORGANISATION : The identity/slug of the Cloudsmith organisation to use when authenticating with OIDC. Defaults to "financial-times" if not set.
