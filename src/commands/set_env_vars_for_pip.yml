@@ -12,10 +12,7 @@ steps:
       command: <<include(scripts/configure_cloudsmith_defaults.sh)>>
   - cloudsmith-oidc/authenticate_with_oidc
   - run:
-      name: Cloudsmith - Configure repository
-      command: |
-        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
-        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
-  - run:
       name: Cloudsmith - Set CLOUDSMITH_PIP_INDEX_URL environment variable
       command: <<include(scripts/set_env_vars_for_pip.sh)>>
+      environment:
+        CLOUDSMITH_REPOSITORY: <<parameters.repository>>
