@@ -20,36 +20,6 @@ release-filters: &release-filters
     only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
 jobs:
-  # Create jobs to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
-
-  test-authenticate_with_oidc:
-    docker:
-      - image: cimg/base:current
-    resource_class: small
-    steps:
-      - checkout
-      - cloudsmith-circleci/authenticate_with_oidc:
-          service_account: "circleci-orb-testing"
-      - run:
-          name: Assert environment variables have been set
-          command: | 
-            if [ $CLOUDSMITH_ORGANISATION != "financial-times" ]
-            then
-              echo "Test failed: CLOUDSMITH_ORGANISATION has not been set correctly."
-              exit 1
-            fi
-            if [ $CLOUDSMITH_SERVICE_ACCOUNT != "circleci-orb-testing" ]
-            then
-              echo "Test failed: CLOUDSMITH_SERVICE_ACCOUNT has not been set."
-              exit 1
-            fi
-            if [ -z $CLOUDSMITH_OIDC_TOKEN ]
-            then
-              echo "Test failed: CLOUDSMITH_OIDC_TOKEN has not been set."
-              exit 1
-            fi
-            echo "All tests passed."
 
   test-set_env_vars_for_pip:
     docker:
@@ -183,9 +153,6 @@ workflows:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       # Test your orb's commands in a custom job and test your orb's jobs directly as a part of this workflow.
-      - test-authenticate_with_oidc:
-          context: circleci-orb-publishing
-          filters: *filters
       - test-set_env_vars_for_pip:
           context: circleci-orb-publishing
           filters: *filters
@@ -219,7 +186,6 @@ workflows:
           # Ensure this job requires all test jobs and the pack job.
           requires:
             - orb-tools/pack
-            - test-authenticate_with_oidc
             - test-set_env_vars_for_pip
             - test-pip_install_package_example
             - test-pip_install_requirements_example

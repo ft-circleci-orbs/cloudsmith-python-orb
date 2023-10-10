@@ -8,15 +8,15 @@ A CircleCI orb to assist with downloading from and publishing packages to Clouds
 
 ## Getting started
 
-The orb commands need the following parameters:
+The orb commands require the following environment variables to be set:
 
-* `repository` : The identity/slug of the Cloudsmith repository
+* `CLOUDSMITH_ORGANISATION` : The identity/slug of the Cloudsmith organisation to use when authenticating with OIDC. Defaults to "financial-times" if not set.
+* `CLOUDSMITH_SERVICE_ACCOUNT` : The identity/slug of the Cloudsmith service account to use when authenticating with OIDC.
 
-* `service_account` : The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
+These are used to authenticate with Cloudsmith using OIDC and can be found in the [Cloudsmith UI](https://cloudsmith.io/).
 
-This can be found in the [Cloudsmith UI](https://cloudsmith.io/orgs/financial-times/).
-
-The orb provides commands to set environment variables for various package managment tools (e.g. pip).
+The orb provides commands to set environment variables for various package managment tools (e.g. pip) and to publish
+packages using the Cloudsmith CLI.
 
 ---
 
