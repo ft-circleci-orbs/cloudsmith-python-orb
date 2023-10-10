@@ -18,7 +18,6 @@ usage:
               python -m build
         - ft-cloudsmith/upload_python_package:
             repository: "your-repository-id"
-            service_account: "your-service-account-id"
   workflows:
     main:
       jobs:
