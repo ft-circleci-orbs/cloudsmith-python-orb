@@ -3,7 +3,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.2.3
   jobs:
     build:
       docker:
@@ -17,7 +17,7 @@ usage:
               python -m pip install build --upgrade --user
               python -m build
         - run: python -m pip install twine --upgrade --user
-        - ft-cloudsmith/set_env_vars_for_twine:
+        - cloudsmith-python/set_env_vars_for_twine:
             repository: "your-repository-id"
         - run:
             name: Publish source and wheel distributions to Cloudsmith

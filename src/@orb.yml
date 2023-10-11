@@ -4,12 +4,12 @@ orbs:
   cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.0.0
 
 description: |
-  Install packages from and publish packages to Cloudsmith using short-lived OIDC credentials.
+  Install python packages from and publish python packages to Cloudsmith using short-lived OIDC credentials.
   Note, all commands require the following environment variables to be set:
    - CLOUDSMITH_ORGANISATION : The identity/slug of the Cloudsmith organisation to use when authenticating with OIDC. Defaults to "financial-times" if not set.
    - CLOUDSMITH_SERVICE_ACCOUNT : The identity/slug of the Cloudsmith service account to use when authenticating with OIDC.
   These are used to authenticate with Cloudsmith using OIDC and can be found in the Cloudsmith UI - https://cloudsmith.io/.
 
 display:
-  home_url: "https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb"
-  source_url: "https://github.com/ft-circleci-orbs/cloudsmith-circleci-orb"
+  home_url: "https://github.com/ft-circleci-orbs/cloudsmith-python-orb"
+  source_url: "https://github.com/ft-circleci-orbs/cloudsmith-python-orb"
