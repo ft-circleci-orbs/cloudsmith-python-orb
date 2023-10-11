@@ -180,7 +180,7 @@ workflows:
       - orb-tools/pack:
           filters: *release-filters
       - orb-tools/publish:
-          orb_name: financial-times/cloudsmith-python
+          orb_name: ft-circleci-orbs/cloudsmith-python
           vcs_type: << pipeline.project.type >>
           pub_type: production
           # Ensure this job requires all test jobs and the pack job.
