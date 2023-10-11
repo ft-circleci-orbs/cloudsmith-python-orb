@@ -3,7 +3,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    ft-cloudsmith: ft-circleci-orbs/cloudsmith-circleci@1.2.3
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0.0
   jobs:
     build:
       docker:
@@ -16,7 +16,7 @@ usage:
             command: |
               python -m pip install build --upgrade --user
               python -m build
-        - ft-cloudsmith/upload_python_package:
+        - cloudsmith-python/upload_package:
             repository: "your-repository-id"
   workflows:
     main:
