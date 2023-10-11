@@ -16,7 +16,7 @@ usage:
             command: |
               python -m pip install build --upgrade --user
               python -m build
-        - cloudsmith-python/upload_python_package:
+        - cloudsmith-python/upload_package:
             repository: "your-repository-id"
   workflows:
     main:

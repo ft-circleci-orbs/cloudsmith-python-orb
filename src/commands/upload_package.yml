@@ -29,7 +29,7 @@ steps:
         cloudsmith --version
   - run:
       name: Cloudsmith - Upload python package file(s)
-      command: <<include(scripts/upload_python_package.sh)>>
+      command: <<include(scripts/upload_package.sh)>>
       environment:
         CLOUDSMITH_REPOSITORY: <<parameters.repository>>
         DIST_DIR: <<parameters.dist_dir>>

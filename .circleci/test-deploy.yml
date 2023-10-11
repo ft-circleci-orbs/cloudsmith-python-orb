@@ -144,7 +144,7 @@ jobs:
             python -m pip install build --upgrade --user
             python -m build
           working_directory: .circleci/simplepkg-py
-      - cloudsmith-python/upload_python_package:
+      - cloudsmith-python/upload_package:
           repository: "circleci-orb-testing"
           dist_dir: .circleci/simplepkg-py/dist
 
