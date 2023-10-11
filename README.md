@@ -1,6 +1,6 @@
 # Cloudsmith Python Orb
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/ft-circleci-orbs/cloudsmith-python-orb/tree/main.svg?style=svg&circle-token=66e39b994c3e883286179e5683fdfe6d3c9926d8)](https://dl.circleci.com/status-badge/redirect/gh/ft-circleci-orbs/cloudsmith-python-orb/tree/main) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/ft-circleci-orbs/cloudsmith-python-orb/master/LICENSE)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/ft-circleci-orbs/cloudsmith-python-orb/tree/main.svg?style=svg&circle-token=66e39b994c3e883286179e5683fdfe6d3c9926d8)](https://dl.circleci.com/status-badge/redirect/gh/ft-circleci-orbs/cloudsmith-python-orb/tree/main) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/ft-circleci-orbs/cloudsmith-python-orb/main/LICENSE)
 
 A CircleCI orb to assist with downloading python packages from and publishing python packages to Cloudsmith.
 
