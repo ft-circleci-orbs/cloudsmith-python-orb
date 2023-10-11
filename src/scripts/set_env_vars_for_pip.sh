@@ -7,7 +7,7 @@ set +e
 
 if [ -z "$CLOUDSMITH_SERVICE_ACCOUNT" ] || [ -z "$CLOUDSMITH_OIDC_TOKEN" ]
 then
-  echo "Unable to find an OIDC token to use. Please ensure the authenticate_with_oidc command has been run before this command."
+  echo "Unable to find an OIDC token to use. Please ensure the cloudsmith-oidc/authenticate_with_oidc command has been run before this command."
   exit 1
 fi
 

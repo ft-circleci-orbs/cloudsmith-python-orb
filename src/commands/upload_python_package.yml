@@ -5,14 +5,15 @@ parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
     type: string
-  service_account:
-    description: The identity/slug of the Cloudsmith service account to use when authenticating
-    type: string
   dist_dir:
     description: The distribution directory where package source distribution and wheel files are located
     type: string
     default: "dist"
 steps:
+  - run:
+      name: Cloudsmith - Configure defaults
+      command: <<include(scripts/configure_cloudsmith_defaults.sh)>>
+  - cloudsmith-oidc/authenticate_with_oidc
   - run:
       name: Cloudsmith - Install CLI
       command: |
@@ -26,16 +27,10 @@ steps:
         echo "Cloudsmith CLI installed OK."
 
         cloudsmith --version
-  - authenticate_with_oidc:
-      service_account: <<parameters.service_account>>
-  - run:
-      name: Cloudsmith - Configure repository and dist_dir
-      command: |
-        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
-        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
-
-        echo "export DIST_DIR=\"<<parameters.dist_dir>>\"" >> $BASH_ENV
-        echo "DIST_DIR=<<parameters.dist_dir>>"
   - run:
       name: Cloudsmith - Upload python package file(s)
       command: <<include(scripts/upload_python_package.sh)>>
+      environment:
+        CLOUDSMITH_REPOSITORY: <<parameters.repository>>
+        DIST_DIR: <<parameters.dist_dir>>
+

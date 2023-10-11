@@ -6,20 +6,13 @@ parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
     type: string
-  service_account:
-    description: The identity/slug of the Cloudsmith service account to use when authenticating with OIDC
-    type: string
 steps:
-  - authenticate_with_oidc:
-      service_account: <<parameters.service_account>>
   - run:
-      name: Cloudsmith - Configure domains
-      command: <<include(scripts/configure_cloudsmith_domains.sh)>>
-  - run:
-      name: Cloudsmith - Configure repository
-      command: |
-        echo "export CLOUDSMITH_REPOSITORY=\"<<parameters.repository>>\"" >> $BASH_ENV
-        echo "CLOUDSMITH_REPOSITORY=<<parameters.repository>>"
+      name: Cloudsmith - Configure defaults
+      command: <<include(scripts/configure_cloudsmith_defaults.sh)>>
+  - cloudsmith-oidc/authenticate_with_oidc
   - run:
       name: Cloudsmith - Set CLOUDSMITH_TWINE environment variables
       command: <<include(scripts/set_env_vars_for_twine.sh)>>
+      environment:
+        CLOUDSMITH_REPOSITORY: <<parameters.repository>>
