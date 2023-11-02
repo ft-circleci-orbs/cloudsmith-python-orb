@@ -16,10 +16,10 @@ jobs:
           repository: financial-times-internal-releases
       - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
       - run:
-            name: Install pipenv
-            command: pip install pipenv
+          name: Install pipenv
+          command: pip install pipenv
       - python/install-packages:
-            pkg-manager: pipenv
+          pkg-manager: pipenv
   workflows:
     main:
       jobs:
