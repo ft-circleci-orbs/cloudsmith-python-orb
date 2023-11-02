@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run: python -m ensurepip --upgrade
       - cloudsmith-python/set_env_vars_for_pip:
-          repository: financial-times-internal-releases
+          repository: your-repository-id
       - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
       - run:
           name: Install pipenv
