@@ -1,21 +1,26 @@
-version: '2.1'
-orbs:
-  cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0.0
-jobs:
-  build:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - checkout
-      # poetry already installed
-      - cloudsmith-python/set_env_vars_for_poetry:
-          repository: your-repository-id
-      - run: >-
-          # check poetry set up in pyproject.toml file?
-          poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
-          # python -m pip install -r requirements.txt --index-url
-          # "$CLOUDSMITH_PIP_INDEX_URL"
-workflows:
-  main:
-    jobs:
-      - build
+description: >
+  Install a package from Cloudsmith using poetry.
+  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/"
+usage:
+  version: '2.1'
+  orbs:
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0
+  jobs:
+    build:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        # TODO poetry already installed? - check image contains poetry
+        - cloudsmith-python/set_env_vars_for_poetry:
+            repository: your-repository-id
+        - run: >-
+            # check poetry set up in pyproject.toml file?
+            # Assuming the poetry toml file is in place.
+            # poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+            # poetry add packagename==package_version
+
+  workflows:
+    main:
+      jobs:
+        - build
