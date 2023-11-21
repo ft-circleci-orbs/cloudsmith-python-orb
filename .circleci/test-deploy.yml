@@ -72,19 +72,17 @@ jobs:
       - cloudsmith-python/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
       - run: python -m pip install pipenv
-      - run:
-        name: Create Pipfile with CLOUDSMITH_PIP_INDEX_URL
-        command: |
-          cat <<EOF >> Pipfile
-          [[source]]
-          url = "\$CLOUDSMITH_PIP_INDEX_URL_FALSE"
-          verify_ssl = true
-          name = "cloudsmith"
-          [packages]
-          simplepkg = "0.0.1"
-          [requires]
-          python_version = "3.9"
-          EOF
+      - run: |
+        cat <<EOF >> Pipfile
+        [[source]]
+        url = "\$CLOUDSMITH_PIP_INDEX_URL_FALSE"
+        verify_ssl = true
+        name = "cloudsmith"
+        [packages]
+        simplepkg = "0.0.1"
+        [requires]
+        python_version = "3.9"
+        EOF
       - run: pipenv install
 
   test-configure_pip_example:
