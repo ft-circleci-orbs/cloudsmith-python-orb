@@ -1,0 +1,21 @@
+version: '2.1'
+orbs:
+  cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0.0
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      # poetry already installed
+      - cloudsmith-python/set_env_vars_for_poetry:
+          repository: your-repository-id
+      - run: >-
+          # check poetry set up in pyproject.toml file?
+          poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+          # python -m pip install -r requirements.txt --index-url
+          # "$CLOUDSMITH_PIP_INDEX_URL"
+workflows:
+  main:
+    jobs:
+      - build
