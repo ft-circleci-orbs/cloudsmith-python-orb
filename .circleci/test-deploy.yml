@@ -77,7 +77,7 @@ jobs:
           command: |
             cat \<< EOT >> Pipfile
             [[source]]
-            url = "\$CLOUDSMITH_PIP_INDEX_URL_FALSE"
+            url = "\$CLOUDSMITH_PIP_INDEX_URL"
             verify_ssl = true
             name = "cloudsmith"
             [packages]
