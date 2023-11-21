@@ -1,9 +1,8 @@
 description: >
-  Install a package from Cloudsmith using the Python orb, via pipenv.
+  Install a package from Cloudsmith using pipenv. The source URL in the Pipfile must reference $CLOUDSMITH_PIP_INDEX_URL.
 usage:
   version: 2.1
   orbs:
-    python: circleci/python@2.1.1
     cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0.0
 jobs:
   build:
@@ -14,11 +13,9 @@ jobs:
       - run: python -m ensurepip --upgrade
       - cloudsmith-python/set_env_vars_for_pip:
           repository: your-repository-id
-      - run:
-          name: Install pipenv
-          command: pip install pipenv
-      - python/install-packages:
-          pkg-manager: pipenv
+      - run: python -m pip install pipenv
+      - run: pipenv install
+
   workflows:
     main:
       jobs:
