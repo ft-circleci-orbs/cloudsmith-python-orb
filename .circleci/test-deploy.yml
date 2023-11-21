@@ -75,7 +75,7 @@ jobs:
       - run:
           name: Create Pipfile
           command: |
-            cat << EOT >> Pipfile
+            cat \<< EOT >> Pipfile
             [[source]]
             url = "\$CLOUDSMITH_PIP_INDEX_URL_FALSE"
             verify_ssl = true
