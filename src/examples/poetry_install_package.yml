@@ -15,10 +15,8 @@ usage:
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
         - run: >-
-            # check poetry set up in pyproject.toml file?
-            # Assuming the poetry toml file is in place.
-            # poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
-            # poetry add packagename==package_version
+            poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+            poetry add packagename==package_version
 
   workflows:
     main:
