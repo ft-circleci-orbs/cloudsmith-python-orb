@@ -98,7 +98,7 @@ jobs:
       - run:
           name: Assert environment variables have been set
           command: |
-            if [ $CLOUDSMITH_USERNAME != "circleci-orb-testing"]
+            if [ $CLOUDSMITH_USERNAME != "circleci-orb-testing" ]
             then
               echo "Test failed: $CLOUDSMITH_USERNAME has not been set correctly."
               exit 1
