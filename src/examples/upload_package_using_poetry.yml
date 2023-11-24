@@ -1,21 +1,25 @@
-version: '2.1'
-orbs:
-  cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0
-jobs:
-  build:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - checkout
-      - run:
-          command: |
-            http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
-            poetry build
-            poetry publish
-          name: Package the code and publish the package
-      - cloudsmith-python/upload_package:
-          repository: your-repository-id
-workflows:
-  main:
-    jobs:
-      - build
+description: >
+  Upload a package from Cloudsmith using poetry.
+  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/"
+usage:
+  version: '2.1'
+  orbs:
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0
+  jobs:
+    build:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        - run:
+            command: |
+              http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+              poetry build
+              poetry publish
+            name: Package the code and publish the package
+        - cloudsmith-python/upload_package:
+            repository: your-repository-id
+  workflows:
+    main:
+      jobs:
+        - build
