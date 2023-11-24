@@ -140,7 +140,7 @@ jobs:
             EOT
       - run: >-
           poetry config http-basic.circleci-orb-testing $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
-          poetry install
+          poetry -v install
 
   test-configure_pip_example:
     docker:
