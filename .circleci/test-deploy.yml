@@ -98,14 +98,14 @@ jobs:
       - run:
           name: Assert environment variables have been set
           command: |
-            if [ $CLOUDSMITH_USERNAME != "circleci-orb-testing" ]
+            if [ $CLOUDSMITH_POETRY_USERNAME != "circleci-orb-testing" ]
             then
-              echo "Test failed: CLOUDSMITH_USERNAME has not been set correctly."
+              echo "Test failed: CLOUDSMITH_POETRY_USERNAME has not been set correctly."
               exit 1
             fi
-            if [ -z $CLOUDSMITH_PASSWORD ]
+            if [ -z $CLOUDSMITH_POETRY_PASSWORD ]
             then
-              echo "Test failed: CLOUDSMITH_PASSWORD has not been set."
+              echo "Test failed: CLOUDSMITH_POETRY_PASSWORD has not been set."
               exit 1
             fi
             echo "All tests passed."
