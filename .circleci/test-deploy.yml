@@ -244,6 +244,9 @@ workflows:
       - test-pipenv_install_package_example:
           context: circleci-orb-publishing
           filters: *filters
+      - test-set_env_vars_for_poetry:
+          context: circleci-orb-publishing
+          filters: *filters
       - test-poetry_install_packages_example:
           context: circleci-orb-publishing
           filters: *filters
