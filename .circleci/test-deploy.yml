@@ -124,7 +124,7 @@ jobs:
             cd poetry-package
             poetry source add --priority=default circleci-orb-testing https://packages.ft.com/basic/financial-times-internal-releases/python/simple/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry add simplepkg
             poetry -v install
             
   test-configure_pip_example:
