@@ -193,7 +193,7 @@ jobs:
           command: |
             python -m pip install build --upgrade --user
             python -m build
-          working_directory: .circleci/simplepkg-py
+          working_directory: .circleci/simplepkg-py-twine
       - run:
           name: Install twine
           command: |
@@ -208,7 +208,7 @@ jobs:
                 --password $CLOUDSMITH_TWINE_PASSWORD \
                 --repository-url $CLOUDSMITH_TWINE_REPOSITORY_URL \
                 dist/*
-          working_directory: .circleci/simplepkg-py
+          working_directory: .circleci/simplepkg-py-twine
 
   test-upload_package_using_cli:
     docker:
@@ -222,7 +222,7 @@ jobs:
           command: |
             python -m pip install build --upgrade --user
             python -m build
-          working_directory: .circleci/simplepkg-py
+          working_directory: .circleci/simplepkg-py-cli
       - cloudsmith-python/upload_package:
           repository: "circleci-orb-testing"
           dist_dir: .circleci/simplepkg-py-cli/dist
@@ -239,8 +239,10 @@ jobs:
             poetry build
             poetry publish
           name: Package the code and publish the package
+          working_directory: .circleci/simplepkg-py-poetry
       - cloudsmith-python/upload_package:
           repository: circleci-orb-testing
+          dist_dir: .circleci/simplepkg-py-poetry/dist
 
 workflows:
   test-deploy:
