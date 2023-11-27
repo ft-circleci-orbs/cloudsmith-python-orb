@@ -255,7 +255,7 @@ jobs:
             requires = ["poetry-core"]
             build-backend = "poetry.core.masonry.api"
             EOT
-            http-basic.circleci-orb-testing $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
             poetry build
             poetry publish
           name: Package the code and publish the package
