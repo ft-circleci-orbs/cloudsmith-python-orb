@@ -233,8 +233,28 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - cloudsmith-python/set_env_vars_for_poetry:
+        repository: circleci-orb-testing
       - run:
           command: |
+            cat \<< EOT >> pyproject.toml
+            [tool.poetry]
+            name = "poetry-example"
+            version = "0.1.0"
+
+            [tool.poetry.dependencies]
+            python = "^3.9.0"
+            simplepkg = "^0.0.1"
+
+            [[tool.poetry.source]]
+            name = "circleci-orb-testing"
+            url = "https://packages.ft.com/basic/circleci-orb-testing/python/simple/"
+            priority = "default"
+
+            [build-system]
+            requires = ["poetry-core"]
+            build-backend = "poetry.core.masonry.api"
+            EOT
             http-basic.circleci-orb-testing $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
             poetry build
             poetry publish
