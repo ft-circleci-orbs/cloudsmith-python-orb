@@ -227,6 +227,21 @@ jobs:
           repository: "circleci-orb-testing"
           dist_dir: .circleci/simplepkg-py/dist
 
+  test-upload_package_using_poetry:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          command: |
+            http-basic.circleci-orb-testing $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+            poetry build
+            poetry publish
+          name: Package the code and publish the package
+      - cloudsmith-python/upload_package:
+          repository: circleci-orb-testing
+
 workflows:
   test-deploy:
     jobs:
