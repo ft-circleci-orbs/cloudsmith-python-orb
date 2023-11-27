@@ -237,30 +237,12 @@ jobs:
           repository: circleci-orb-testing
       - run:
           command: |
-            cat \<< EOT >> pyproject.toml
-
-            [tool.poetry]
-            name = "poetry-example"
-            version = "0.1.0"
-            description = "A test poetry package"
-            authors = ["Code Management <code.management@ft.com>"]
-
-            [tool.poetry.dependencies]
-            python = "^3.9.0"
-            simplepkg = "^0.0.1"
-
-            [[tool.poetry.source]]
-            name = "circleci-orb-testing"
-            url = "https://packages.ft.com/basic/circleci-orb-testing/python/simple/"
-            priority = "default"
-
-            [build-system]
-            requires = ["poetry-core"]
-            build-backend = "poetry.core.masonry.api"
-            EOT
+            poetry new poetry-example
+            cd poetry-example
+            poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry build
-            poetry publish
+            poetry publish -r circleci-orb-testing
           name: Package the code and publish the package
           working_directory: .circleci/simplepkg-py
       - cloudsmith-python/upload_package:
