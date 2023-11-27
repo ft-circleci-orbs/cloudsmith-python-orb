@@ -234,7 +234,7 @@ jobs:
     steps:
       - checkout
       - cloudsmith-python/set_env_vars_for_poetry:
-        repository: circleci-orb-testing
+          repository: circleci-orb-testing
       - run:
           command: |
             cat \<< EOT >> pyproject.toml
