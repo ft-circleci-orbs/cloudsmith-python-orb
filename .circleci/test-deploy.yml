@@ -238,6 +238,13 @@ jobs:
       - run:
           command: |
             cat \<< EOT >> pyproject.toml
+
+            description = "This is a test poetry package."
+
+            authors = [
+              "Code Management"
+            ]
+
             [tool.poetry]
             name = "poetry-example"
             version = "0.1.0"
