@@ -237,17 +237,17 @@ jobs:
           repository: circleci-orb-testing
       - run:
           command: |
-            poetry new poetry-example
-            cd poetry-example
+            poetry new poetry-package
+            cd poetry-package
             poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry build
             poetry publish -r circleci-orb-testing
           name: Package the code and publish the package
-          working_directory: .circleci/simplepkg-py
+          working_directory: .circleci/
       - cloudsmith-python/upload_package:
           repository: circleci-orb-testing
-          dist_dir: .circleci/simplepkg-py/dist
+          dist_dir: .circleci/poetry-package/dist
 
 workflows:
   test-deploy:
