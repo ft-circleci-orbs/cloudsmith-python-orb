@@ -120,11 +120,25 @@ jobs:
       - run:
           name: Create pyproject.toml file
           command: |
-            poetry new poetry-package
-            cd poetry-package
-            poetry source add --priority=default circleci-orb-testing https://packages.ft.com/basic/financial-times-internal-releases/python/simple/
+            cat \<< EOT >> pyproject.toml
+            [tool.poetry]
+            name = "poetry-example"
+            version = "0.1.0"
+
+            [tool.poetry.dependencies]
+            python = "^3.9.0"
+            simplepkg = "^0.0.1"
+
+            [[tool.poetry.source]]
+            name = "circleci-orb-testing"
+            url = "https://packages.ft.com/basic/financial-times-internal-releases/python/simple/"
+            priority = "default"
+
+            [build-system]
+            requires = ["poetry-core"]
+            build-backend = "poetry.core.masonry.api"
+            EOT
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry add simplepkg
             poetry -v install
             
   test-configure_pip_example:
