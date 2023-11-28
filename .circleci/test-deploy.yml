@@ -110,6 +110,28 @@ jobs:
             fi
             echo "All tests passed."
 
+  test-upload_package_using_poetry:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - cloudsmith-python/set_env_vars_for_poetry:
+          repository: circleci-orb-testing
+      - run:
+          command: |
+            poetry new poetry-package
+            cd poetry-package
+            poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
+            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry build
+            poetry publish -r circleci-orb-testing
+          name: Package the code and publish the package
+          working_directory: .circleci/
+      - cloudsmith-python/upload_package:
+          repository: circleci-orb-testing
+          dist_dir: .circleci/poetry-package/dist
+
   test-poetry_install_packages_example:
     docker:
       - image: cimg/python:3.9
@@ -133,15 +155,14 @@ jobs:
 
             [[tool.poetry.source]]
             name = "circleci-orb-testing"
-            url = "https://packages.ft.com/basic/financial-times-internal-releases/python/simple/"
+            url = "https://python.cloudsmith.io/financial-times/circleci-orb-testing/"
             priority = "default"
 
             [build-system]
             requires = ["poetry-core"]
             build-backend = "poetry.core.masonry.api"
             EOT
-            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry -v install
+            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD poetry -v install
             
   test-configure_pip_example:
     docker:
@@ -227,28 +248,6 @@ jobs:
       - cloudsmith-python/upload_package:
           repository: "circleci-orb-testing"
           dist_dir: .circleci/simplepkg-py/dist
-
-  test-upload_package_using_poetry:
-    docker:
-      - image: cimg/python:3.9
-    resource_class: small
-    steps:
-      - checkout
-      - cloudsmith-python/set_env_vars_for_poetry:
-          repository: circleci-orb-testing
-      - run:
-          command: |
-            poetry new poetry-package
-            cd poetry-package
-            poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
-            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry build
-            poetry publish -r circleci-orb-testing
-          name: Package the code and publish the package
-          working_directory: .circleci/
-      - cloudsmith-python/upload_package:
-          repository: circleci-orb-testing
-          dist_dir: .circleci/poetry-package/dist
 
 workflows:
   test-deploy:
