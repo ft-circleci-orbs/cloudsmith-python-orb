@@ -122,8 +122,10 @@ jobs:
           command: |
             cat \<< EOT >> pyproject.toml
             [tool.poetry]
-            name = "poetry-example"
+            name = "poetry-package"
             version = "0.1.0"
+            description = "Poetry package for testing purposes."
+            authors = ["Code Management <code.management@ft.com>"]
 
             [tool.poetry.dependencies]
             python = "^3.9.0"
