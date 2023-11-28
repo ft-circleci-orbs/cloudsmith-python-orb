@@ -142,28 +142,12 @@ jobs:
       - run:
           name: Create pyproject.toml file
           command: |
-            cat \<< EOT >> pyproject.toml
-            [tool.poetry]
-            name = "poetry-package"
-            version = "0.1.0"
-            description = "Poetry package for testing purposes."
-            authors = ["Code Management <code.management@ft.com>"]
-
-            [tool.poetry.dependencies]
-            python = "^3.9.0"
-
-            [[tool.poetry.source]]
-            name = "circleci-orb-testing"
-            url = "https://python.cloudsmith.io/financial-times/circleci-orb-testing/"
-            priority = "default"
-
-            [build-system]
-            requires = ["poetry-core"]
-            build-backend = "poetry.core.masonry.api"
-            EOT
+            poetry new poetry-package
+            cd poetry-package
+            poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry add simplepkg
-            poetry -v install
+            poetry lock
+            poetry install -v
             
   test-configure_pip_example:
     docker:
