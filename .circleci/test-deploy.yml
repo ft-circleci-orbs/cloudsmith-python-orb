@@ -146,6 +146,7 @@ jobs:
             cd poetry-package
             poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry add simplepkg --lock
             poetry lock
             poetry install -v
             
