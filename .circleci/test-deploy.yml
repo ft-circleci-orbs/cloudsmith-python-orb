@@ -145,8 +145,8 @@ jobs:
             poetry new poetry-package
             cd poetry-package
             cat pyproject.toml
-            poetry source add --priority=default poetry-package https://python.cloudsmith.io/financial-times/circleci-orb-testing/
-            poetry shell
+            poetry source add --priority=default poetry-package poetry source add --priority=default poetry-package https://packages.ft.com/circleci-orb-testing/python/simple/
+            poetry config http-basic.poetry-package $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry add requests
             poetry install -v
             
