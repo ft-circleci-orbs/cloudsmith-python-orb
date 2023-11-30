@@ -119,14 +119,17 @@ jobs:
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
+          name: Create Poetry package from scratch 
           command: |
             poetry new poetry-package
             cd poetry-package
             poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+      - run:
+          name: Build and publish the poetry package
+          command: |
             poetry build
             poetry publish -r circleci-orb-testing
-          name: Package the code and publish the package
           working_directory: .circleci/
       - cloudsmith-python/upload_package:
           repository: circleci-orb-testing
@@ -140,13 +143,16 @@ jobs:
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
-          name: Create pyproject.toml file
+          name: Create Poetry package from scratch
           command: |
             poetry new poetry-package
             cd poetry-package
             poetry source add --priority=default poetry-for-cloudsmith https://packages.ft.com/basic/circleci-orb-testing/python/simple/
             poetry config http-basic.poetry-for-cloudsmith $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry install -v
+      - run:
+          name: Install dependencies
+          command: |
+            poetry install
             
   test-configure_pip_example:
     docker:
