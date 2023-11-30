@@ -144,9 +144,8 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default poetry-package https://packages.ft.com/basic/circleci-orb-testing/python/simple/
-            poetry config http-basic.poetry-package $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry add simplepkg --lock
+            poetry source add --priority=default poetry-for-cloudsmith https://packages.ft.com/basic/circleci-orb-testing/python/simple/
+            poetry config http-basic.poetry-for-cloudsmith $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry install -v
             
   test-configure_pip_example:
