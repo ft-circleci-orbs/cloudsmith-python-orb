@@ -1,6 +1,6 @@
 description: >
   Upload a package from Cloudsmith using poetry.
-  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/"
+  For uploads, the source URL in pyproject.toml must be set to https://python.cloudsmith.io/financial-times/your-repository-id/
 usage:
   version: '2.1'
   orbs:
@@ -11,14 +11,20 @@ usage:
         - image: cimg/python:3.9
       steps:
         - checkout
+        - cloudsmith-python/set_env_vars_for_poetry:
+            repository: your-repository-id
         - run:
+            name: Create Poetry package and publish package
             command: |
-              http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+              poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
               poetry build
-              poetry publish
-            name: Package the code and publish the package
+              poetry publish -r cloudsmith-source-url
+            working_directory: .circleci/
+
         - cloudsmith-python/upload_package:
             repository: your-repository-id
+            dist_dir: .circleci/poetry-package/dist
+
   workflows:
     main:
       jobs:
