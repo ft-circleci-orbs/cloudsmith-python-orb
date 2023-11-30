@@ -128,6 +128,7 @@ jobs:
       - run:
           name: Build and publish the poetry package
           command: |
+            cd poetry-package
             poetry build
             poetry publish -r circleci-orb-testing
           working_directory: .circleci/
@@ -152,6 +153,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            cd poetry-package
             poetry install
             
   test-configure_pip_example:
