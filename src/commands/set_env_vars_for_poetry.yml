@@ -1,5 +1,5 @@
 description:
-  Generate temporary Cloudsmith credentials using OIDC and construct a poetry username and password from the service account credentials. On completion the command sets the CLOUDSMITH_USERNAME and CLOUDSMITH_PASSWORD environment variables for use with poetry.
+  Generate temporary Cloudsmith credentials using OIDC and construct a poetry username and password from the service account credentials. On completion the command sets the CLOUDSMITH_POETRY_USERNAME and CLOUDSMITH_POETRY_PASSWORD environment variables for use with poetry.
 parameters:
   repository:
     description: The identity/slug of the Cloudsmith repository
