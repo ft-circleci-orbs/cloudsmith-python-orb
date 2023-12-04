@@ -14,7 +14,7 @@ usage:
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
         - run: >-
-            poetry config http-basic.your-repository-id $CLOUDSMITH_USERNAME $CLOUDSMITH_PASSWORD
+            poetry config http-basic.your-repository-id $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry install
 
   workflows:
