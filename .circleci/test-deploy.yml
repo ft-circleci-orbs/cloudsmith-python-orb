@@ -123,15 +123,15 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default circleci-orb-testing https://python.cloudsmith.io/financial-times/circleci-orb-testing/
-            poetry config http-basic.circleci-orb-testing $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry source add --priority=default cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
+            poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry build
-            poetry publish -r circleci-orb-testing
+            poetry publish -r cloudsmith-source-url
 
-          working_directory: .circleci/
-      - cloudsmith-python/upload_package:
-          repository: circleci-orb-testing
-          dist_dir: .circleci/poetry-package/dist
+          # working_directory: .circleci/
+      # - cloudsmith-python/upload_package:
+      #     repository: circleci-orb-testing
+      #     dist_dir: .circleci/poetry-package/dist
 
   test-poetry_install_packages_example:
     docker:
@@ -145,8 +145,8 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default poetry-for-cloudsmith https://packages.ft.com/basic/circleci-orb-testing/python/simple/
-            poetry config http-basic.poetry-for-cloudsmith $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry source add --priority=default cloudsmith-source-url https://packages.ft.com/basic/circleci-orb-testing/python/simple/
+            poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry install
             
   test-configure_pip_example:
