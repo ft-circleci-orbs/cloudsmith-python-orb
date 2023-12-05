@@ -19,11 +19,6 @@ usage:
               poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
               poetry build
               poetry publish -r cloudsmith-source-url
-            working_directory: .circleci/
-
-        - cloudsmith-python/upload_package:
-            repository: your-repository-id
-            dist_dir: .circleci/poetry-package/dist
 
   workflows:
     main:

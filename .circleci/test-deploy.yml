@@ -128,11 +128,6 @@ jobs:
             poetry build
             poetry publish -r cloudsmith-source-url
 
-          # working_directory: .circleci/
-      # - cloudsmith-python/upload_package:
-      #     repository: circleci-orb-testing
-      #     dist_dir: .circleci/poetry-package/dist
-
   test-poetry_install_packages_example:
     docker:
       - image: cimg/python:3.9
