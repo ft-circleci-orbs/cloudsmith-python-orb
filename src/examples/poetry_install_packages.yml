@@ -13,7 +13,7 @@ usage:
         - checkout
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
-        - run: >-
+        - run: >- # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry install
 

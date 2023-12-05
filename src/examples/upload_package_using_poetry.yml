@@ -14,6 +14,7 @@ usage:
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
         - run:
+            # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
             name: Create Poetry package and publish package
             command: |
               poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD

@@ -119,6 +119,7 @@ jobs:
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
+          # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
           name: Create Poetry package and publish package
           command: |
             poetry new poetry-package
@@ -136,6 +137,7 @@ jobs:
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
+          # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
           name: Create Poetry package and install dependencies
           command: |
             poetry new poetry-package
