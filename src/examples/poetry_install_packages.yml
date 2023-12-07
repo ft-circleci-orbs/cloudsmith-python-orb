@@ -1,6 +1,7 @@
 description: >
   Install a package from Cloudsmith using poetry.
-  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/"
+  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/" 
+  and the corresponding cloudsmith-source-url parameter is an arbitrary label for the Cloudsmith Source URL.
 usage:
   version: '2.1'
   orbs:
@@ -13,7 +14,7 @@ usage:
         - checkout
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
-        - run: >- # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
+        - run: >- 
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry install
 
