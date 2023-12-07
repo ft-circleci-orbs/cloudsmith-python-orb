@@ -146,6 +146,7 @@ jobs:
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry add -q requests
             poetry install
+            poetry show
             
   test-configure_pip_example:
     docker:
