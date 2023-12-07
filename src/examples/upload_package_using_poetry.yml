@@ -1,6 +1,7 @@
 description: >
   Upload a package from Cloudsmith using poetry.
   For uploads, the source URL in pyproject.toml must be set to https://python.cloudsmith.io/financial-times/your-repository-id/
+  and the corresponding parameter cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL.
 usage:
   version: '2.1'
   orbs:
@@ -14,7 +15,6 @@ usage:
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
         - run:
-            # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
             name: Create Poetry package and publish package
             command: |
               poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
