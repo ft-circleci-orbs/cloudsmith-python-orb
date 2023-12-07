@@ -144,6 +144,7 @@ jobs:
             cd poetry-package
             poetry source add --priority=default cloudsmith-source-url https://packages.ft.com/basic/circleci-orb-testing/python/simple/
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry add requests
             poetry install
             
   test-configure_pip_example:
