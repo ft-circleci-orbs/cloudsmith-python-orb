@@ -14,11 +14,13 @@ usage:
         - checkout
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
-        - run: >-
-            poetry config http-basic.cloudsmith-source-url \
-            $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
-            poetry add -q simplepkg
-            poetry install
+        - run:
+            name: Install Poetry package
+            command: |
+              poetry config http-basic.cloudsmith-source-url \
+              $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+              poetry add -q simplepkg
+              poetry install
 
   workflows:
     main:
