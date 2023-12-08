@@ -1,0 +1,25 @@
+description: >
+  Install a package from Cloudsmith using poetry.
+  The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/
+  and the corresponding cloudsmith-source-url parameter is an arbitrary label for the Cloudsmith Source URL.
+usage:
+  version: '2.1'
+  orbs:
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.1
+  jobs:
+    build:
+      docker:
+        - image: cimg/python:3.9
+      steps:
+        - checkout
+        - cloudsmith-python/set_env_vars_for_poetry:
+            repository: your-repository-id
+        - run: >-
+            poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry add -q simplepkg
+            poetry install
+
+  workflows:
+    main:
+      jobs:
+        - build

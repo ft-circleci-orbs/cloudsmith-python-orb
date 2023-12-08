@@ -3,18 +3,18 @@ description: >
 usage:
   version: 2.1
   orbs:
-    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.0
-  jobs:
-    build:
-      docker:
-        - image: cimg/python:3.9
-      steps:
-        - checkout
-        - run: python -m ensurepip --upgrade
-        - cloudsmith-python/set_env_vars_for_pip:
-            repository: your-repository-id
-        - run: python -m pip install pipenv
-        - run: pipenv install
+    cloudsmith-python: ft-circleci-orbs/cloudsmith-python@1.1
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run: python -m ensurepip --upgrade
+      - cloudsmith-python/set_env_vars_for_pip:
+          repository: your-repository-id
+      - run: python -m pip install pipenv
+      - run: pipenv install
 
   workflows:
     main:

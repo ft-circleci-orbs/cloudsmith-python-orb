@@ -81,12 +81,73 @@ jobs:
             verify_ssl = true
             name = "cloudsmith"
             [packages]
-            simplepkg = "0.0.1"
+            simplepkg = "0.4.3"
             [requires]
             python_version = "3.9"
             EOT
       - run: pipenv install
 
+  test-set_env_vars_for_poetry:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - cloudsmith-python/set_env_vars_for_poetry:
+          repository: "circleci-orb-testing"
+      - run:
+          name: Assert environment variables have been set
+          command: |
+            if [ $CLOUDSMITH_POETRY_USERNAME != "circleci-orb-testing" ]
+            then
+              echo "Test failed: CLOUDSMITH_POETRY_USERNAME has not been set correctly."
+              exit 1
+            fi
+            if [ -z $CLOUDSMITH_POETRY_PASSWORD ]
+            then
+              echo "Test failed: CLOUDSMITH_POETRY_PASSWORD has not been set."
+              exit 1
+            fi
+            echo "All tests passed."
+
+  test-upload_package_using_poetry:
+    docker:
+      - image: cimg/python:3.9
+    resource_class: small
+    steps:
+      - checkout
+      - cloudsmith-python/set_env_vars_for_poetry:
+          repository: circleci-orb-testing
+      - run:
+          # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
+          name: Create Poetry package and publish package
+          command: |
+            poetry new poetry-package
+            cd poetry-package
+            poetry source add --priority=default cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
+            poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry build
+            poetry publish -r cloudsmith-source-url
+
+  test-poetry_install_packages_example:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - cloudsmith-python/set_env_vars_for_poetry:
+          repository: circleci-orb-testing
+      - run:
+          # cloudsmith-source-url is an arbitrary label for the Cloudsmith Source URL
+          name: Create Poetry package and install dependencies
+          command: |
+            poetry new poetry-package
+            cd poetry-package
+            poetry source add --priority=default cloudsmith-source-url https://packages.ft.com/basic/circleci-orb-testing/python/simple/
+            poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
+            poetry add -q simplepkg
+            poetry install
+            poetry show
+            
   test-configure_pip_example:
     docker:
       - image: cimg/python:3.9
@@ -189,6 +250,12 @@ workflows:
       - test-pipenv_install_package_example:
           context: circleci-orb-publishing
           filters: *filters
+      - test-set_env_vars_for_poetry:
+          context: circleci-orb-publishing
+          filters: *filters
+      - test-poetry_install_packages_example:
+          context: circleci-orb-publishing
+          filters: *filters
       - test-configure_pip_example:
           context: circleci-orb-publishing
           filters: *filters
@@ -203,6 +270,10 @@ workflows:
           filters: *filters
           requires:
             - test-upload_package_using_twine
+      - test-upload_package_using_poetry:
+          context: circleci-orb-publishing
+          filters: *filters
+
       # The orb must be re-packed for publishing, and saved to the workspace.
       - orb-tools/pack:
           filters: *release-filters
@@ -217,10 +288,13 @@ workflows:
             - test-pip_install_package_example
             - test-pip_install_requirements_example
             - test-pipenv_install_package_example
+            - test-set_env_vars_for_poetry
+            - test-poetry_install_packages_example
             - test-configure_pip_example
             - test-set_env_vars_for_twine
             - test-upload_package_using_twine
             - test-upload_package_using_cli
+            - test-upload_package_using_poetry
           # Use a context to hold your publishing token.
           context: circleci-orb-publishing
           filters: *release-filters
