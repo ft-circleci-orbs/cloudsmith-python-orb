@@ -11,18 +11,6 @@ then
   exit 1
 fi
 
-if [ -z "$CLOUDSMITH_REPOSITORY" ]
-then
-  echo "Unable to set environment variables for pip. Env var CLOUDSMITH_REPOSITORY is not defined."
-  exit 1
-fi
-
-if [ -z "$CLOUDSMITH_DOWNLOADS_DOMAIN" ]
-then
-  echo "Unable to set environment variables for pip. Env var CLOUDSMITH_DOWNLOADS_DOMAIN is not defined."
-  exit 1
-fi
-
 echo "export CLOUDSMITH_POETRY_USERNAME=\"$CLOUDSMITH_SERVICE_ACCOUNT\"" >> "$BASH_ENV"
 echo "export CLOUDSMITH_POETRY_PASSWORD=\"$CLOUDSMITH_OIDC_TOKEN\"" >> "$BASH_ENV"
 
