@@ -26,7 +26,7 @@ fi
 echo "export CLOUDSMITH_POETRY_USERNAME=\"$CLOUDSMITH_SERVICE_ACCOUNT\"" >> "$BASH_ENV"
 echo "export CLOUDSMITH_POETRY_PASSWORD=\"$CLOUDSMITH_OIDC_TOKEN\"" >> "$BASH_ENV"
 
-echo "The following environment variables have been exported. Note, the OIDC token has been masked below."
+echo "The following environment variables have been exported. Note, CLOUDSMITH_POETRY_PASSWORD has been masked below."
 echo ""
 echo "CLOUDSMITH_POETRY_USERNAME=$CLOUDSMITH_POETRY_USERNAME"
 echo "CLOUDSMITH_POETRY_PASSWORD=********"
