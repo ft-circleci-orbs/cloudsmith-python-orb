@@ -28,4 +28,5 @@ echo "export CLOUDSMITH_POETRY_PASSWORD=\"$CLOUDSMITH_OIDC_TOKEN\"" >> "$BASH_EN
 
 echo "The following environment variables have been exported. Note, the OIDC token has been masked below."
 echo ""
-echo "CLOUDSMITH_POETRY_SOURCE_URL=https://$CLOUDSMITH_DOWNLOADS_DOMAIN/basic/$CLOUDSMITH_REPOSITORY/python/simple/"
+echo "CLOUDSMITH_POETRY_USERNAME=$CLOUDSMITH_POETRY_USERNAME"
+echo "CLOUDSMITH_POETRY_PASSWORD=********"
