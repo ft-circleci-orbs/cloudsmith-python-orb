@@ -81,7 +81,7 @@ jobs:
             verify_ssl = true
             name = "cloudsmith"
             [packages]
-            simplepkg = "0.0.1"
+            simplepkg = "0.4.3"
             [requires]
             python_version = "3.9"
             EOT
