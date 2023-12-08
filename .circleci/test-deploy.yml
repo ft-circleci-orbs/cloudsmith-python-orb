@@ -153,7 +153,7 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - checkout
-      - run: echo "simplepkg==0.0.1" > requirements.txt
+      - run: echo "simplepkg==0.4.3" > requirements.txt
       - cloudsmith-python/set_env_vars_for_pip:
           repository: "circleci-orb-testing"
       - run: python -m pip config set global.index-url "$CLOUDSMITH_PIP_INDEX_URL"
