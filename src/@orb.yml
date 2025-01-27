@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.0.0
+  cloudsmith-oidc: ft-circleci-orbs/cloudsmith-oidc@1.0
 
 description: |
   Install python packages from and publish python packages to Cloudsmith using short-lived OIDC credentials.
