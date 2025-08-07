@@ -83,7 +83,7 @@ jobs:
             [packages]
             simplepkg = "0.4.3"
             [requires]
-            python_version = "3.9"
+            python_version = "3.13"
             EOT
       - run: pipenv install
 

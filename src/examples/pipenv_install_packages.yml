@@ -1,5 +1,6 @@
 description: >
   Install a package from Cloudsmith using pipenv. The source URL in the Pipfile must reference $CLOUDSMITH_PIP_INDEX_URL.
+  Note: Ensure the python_version in your Pipfile matches the Python version in your Docker image to avoid installation errors.
 usage:
   version: 2.1
   orbs:

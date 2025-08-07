@@ -2,6 +2,7 @@ description: >
   Install a package from Cloudsmith using poetry.
   The source URL in pyproject.toml must be set to https://packages.ft.com/basic/your-repository-id/python/simple/
   and the corresponding cloudsmith-source-url parameter is an arbitrary label for the Cloudsmith Source URL.
+  Note: Ensure the Python version requirement in your pyproject.toml matches the Python version in your Docker image.
 usage:
   version: 2.1
   orbs:
