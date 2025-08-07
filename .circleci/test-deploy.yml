@@ -23,7 +23,7 @@ jobs:
 
   test-set_env_vars_for_pip:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -46,7 +46,7 @@ jobs:
 
   test-pip_install_package_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - cloudsmith-python/set_env_vars_for_pip:
@@ -55,7 +55,7 @@ jobs:
 
   test-pip_install_requirements_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: echo "simplepkg==0.0.1" > requirements.txt
@@ -65,7 +65,7 @@ jobs:
 
   test-pipenv_install_package_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: python -m ensurepip --upgrade
@@ -89,7 +89,7 @@ jobs:
 
   test-set_env_vars_for_poetry:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -112,7 +112,7 @@ jobs:
 
   test-upload_package_using_poetry:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -131,7 +131,7 @@ jobs:
 
   test-poetry_install_packages_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - cloudsmith-python/set_env_vars_for_poetry:
@@ -150,7 +150,7 @@ jobs:
             
   test-configure_pip_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: echo "simplepkg==0.4.3" > requirements.txt
@@ -161,7 +161,7 @@ jobs:
 
   test-set_env_vars_for_twine:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -189,7 +189,7 @@ jobs:
 
   test-upload_package_using_twine:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -218,7 +218,7 @@ jobs:
 
   test-upload_package_using_cli:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
