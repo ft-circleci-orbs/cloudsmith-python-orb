@@ -159,7 +159,8 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default cloudsmith-source-url https://packages.ft.com/basic/circleci-orb-testing/python/simple/
+            # Configure the repository for publishing (not just as a source)
+            poetry config repositories.cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry add -q simplepkg
             poetry install
