@@ -12,6 +12,8 @@ usage:
         - image: cimg/python:3.13
       steps:
         - checkout
+        - run: python -m ensurepip --upgrade
+        - run: python -m pip install poetry --upgrade --user
         - cloudsmith-python/set_env_vars_for_poetry:
             repository: your-repository-id
         - run:
