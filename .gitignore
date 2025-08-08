@@ -5,3 +5,7 @@ orb.yml
 
 .circleci/simplepkg-py/dist
 .circleci/simplepkg-py/simplepkg.egg-info
+
+# Folders
+/bin
+/lib

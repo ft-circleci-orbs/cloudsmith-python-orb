@@ -23,7 +23,7 @@ jobs:
 
   test-set_env_vars_for_pip:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -46,7 +46,7 @@ jobs:
 
   test-pip_install_package_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - cloudsmith-python/set_env_vars_for_pip:
@@ -55,7 +55,7 @@ jobs:
 
   test-pip_install_requirements_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: echo "simplepkg==0.0.1" > requirements.txt
@@ -65,7 +65,7 @@ jobs:
 
   test-pipenv_install_package_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: python -m ensurepip --upgrade
@@ -83,13 +83,13 @@ jobs:
             [packages]
             simplepkg = "0.4.3"
             [requires]
-            python_version = "3.9"
+            python_version = "3.13"
             EOT
       - run: pipenv install
 
   test-set_env_vars_for_poetry:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -112,10 +112,18 @@ jobs:
 
   test-upload_package_using_poetry:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
+      - run: 
+          name: Install Poetry using official installer
+          command: |
+            curl -sSL https://install.python-poetry.org | python3 -
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+            poetry --version
+            poetry config --list
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
@@ -124,16 +132,25 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
+            # Configure the repository for publishing (not just as a source)
+            poetry config repositories.cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry build
             poetry publish -r cloudsmith-source-url
 
   test-poetry_install_packages_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
+      - run: 
+          name: Install Poetry using official installer
+          command: |
+            curl -sSL https://install.python-poetry.org | python3 -
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+            poetry --version
+            poetry config --list
       - cloudsmith-python/set_env_vars_for_poetry:
           repository: circleci-orb-testing
       - run:
@@ -142,7 +159,8 @@ jobs:
           command: |
             poetry new poetry-package
             cd poetry-package
-            poetry source add --priority=default cloudsmith-source-url https://packages.ft.com/basic/circleci-orb-testing/python/simple/
+            # Configure the repository for publishing (not just as a source)
+            poetry config repositories.cloudsmith-source-url https://python.cloudsmith.io/financial-times/circleci-orb-testing/
             poetry config http-basic.cloudsmith-source-url $CLOUDSMITH_POETRY_USERNAME $CLOUDSMITH_POETRY_PASSWORD
             poetry add -q simplepkg
             poetry install
@@ -150,7 +168,7 @@ jobs:
             
   test-configure_pip_example:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     steps:
       - checkout
       - run: echo "simplepkg==0.4.3" > requirements.txt
@@ -161,7 +179,7 @@ jobs:
 
   test-set_env_vars_for_twine:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -189,7 +207,7 @@ jobs:
 
   test-upload_package_using_twine:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
@@ -218,7 +236,7 @@ jobs:
 
   test-upload_package_using_cli:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.13
     resource_class: small
     steps:
       - checkout
